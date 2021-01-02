@@ -3,6 +3,13 @@ package com.almasb.fxglgames.drop;
 
 import java.util.Random;
 
+import com.almasb.fxgl.app.GameApplication;
+import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.core.math.FXGLMath;
+import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.Entity;
+import javafx.util.Duration;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -15,7 +22,86 @@ import javafx.stage.Stage;
 
 import com.almasb.fxglgames.drop.Board.Cell;
 
-public class BattleshipMain extends Application {
+import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.loopBGM;
+
+
+public class BattleshipMain extends GameApplication {
+
+    @Override
+    protected void initSettings(GameSettings settings) {
+        settings.setTitle("Battleship");
+        settings.setVersion("1.0");
+        settings.setWidth(600);
+        settings.setHeight(800);
+
+
+    }
+
+    @Override
+    protected void initGame() {
+
+
+    }
+
+    @Override
+    protected void initUI(){
+        BorderPane root = new BorderPane();
+        root.setPrefSize(600, 800);
+        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
+        FXGL.getGameScene().addUINode(root);
+
+        enemyBoard = new Board(true, event -> {
+            if (!running)
+                return;
+
+            Cell cell = (Cell) event.getSource();
+            if (cell.wasShot){
+                System.out.println("already shot");
+                return;}
+
+
+
+
+
+            enemyTurn = !cell.shoot();
+
+
+
+            if (enemyBoard.ships == 0) {
+                System.out.println("YOU WIN");
+                System.exit(0);
+            }
+
+            if (enemyTurn)
+                enemyMove();
+        });
+
+        playerBoard = new Board(false, event -> {
+            if (running)
+                return;
+
+            Cell cell = (Cell) event.getSource();
+            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
+                if (--shipsToPlace == 0) {
+                    startGame();
+                }
+            }
+
+            spawnDroplet(cell.x, cell.y);
+        });
+
+        VBox vbox = new VBox(50, enemyBoard, playerBoard);
+        vbox.setAlignment(Pos.CENTER);
+
+        root.setCenter(vbox);
+
+
+    }
+
+    public enum Type {
+        DROPLET
+    }
 
     Scene scene2;
     Stage window;
@@ -72,6 +158,8 @@ public class BattleshipMain extends Application {
                     startGame();
                 }
             }
+
+            spawnDroplet(cell.x, cell.y);
         });
 
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
@@ -116,9 +204,17 @@ public class BattleshipMain extends Application {
         running = true;
     }
 
+    private void spawnDroplet(int x, int y) {
+        entityBuilder()
+                .type(DropApp.Type.DROPLET)
+                .at(x,y)
+                .viewWithBBox("droplet.png")
+                .buildAndAttach();
+    }
 
 
-    @Override
+
+
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
 
@@ -175,6 +271,8 @@ public class BattleshipMain extends Application {
                     startGame();
                 }
             }
+
+            spawnDroplet(cell.x, cell.y);
         });
 
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
