@@ -8,6 +8,8 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.components.IDComponent;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
@@ -23,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import com.almasb.fxglgames.drop.Board.Cell;
+
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGL.loopBGM;
@@ -48,8 +51,23 @@ public class BattleshipMain extends GameApplication {
 
     }
 
+    public Entity[][] shipBoard = new Entity[10][10];
+
+    public Entity[][] hitBoard = new Entity[10][10];
+
+    public Entity[][] getShipBoard() {
+        return shipBoard;
+    }
+
+    public Entity[][] getHitBoard() {
+        return hitBoard;
+    }
+
     @Override
     protected void initGame() {
+
+        getGameWorld().addEntityFactory(new TileFactory());
+
         BoardState State = new BoardState();
 
         Player player1 = new Player();
@@ -132,17 +150,35 @@ public class BattleshipMain extends GameApplication {
 
         //private VBox rows = new VBox()
 
-        for (int y = 0; y < 300; y+=30) {
-            HBox row = new HBox();
-            for (int x = 0; x < 300; x+=30) {
-                Entity tile = spawnTile(x, y);
-                //row.getChildren().add(tile);
-                getGameWorld().addEntity(tile);
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 10; x++) {
+                //Entity tile = spawnTile(x*30, y*30);
+                shipBoard[x][y] = spawn("tile", x * 30, y * 30);
+                //getGameWorld().addEntity(tile);
             }
 
             //rows.getChildren().add(row);
 
         }
+
+        final int START_X = 68;
+        final int START_Y = 420;
+
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 10; x++) {
+                //Entity tile = spawnTile(x*30, y*30);
+                Entity tile = spawn("tile", x * 30 + START_X, y * 30 + START_Y);
+                //getGameWorld().addEntity(tile);
+                tile.setProperty("x", x);
+                tile.setProperty("y", y);
+
+            }
+
+
+            //rows.getChildren().add(row);
+
+        }
+
 
         //getChildren().add(rows);
 
@@ -322,7 +358,7 @@ public class BattleshipMain extends GameApplication {
         running = true;
     }
 
-    private Entity spawnDroplet(double x, double y) {
+    static Entity spawnDroplet(double x, double y) {
        Entity Droplet = FXGL.entityBuilder()
                 .type(BattleshipMain.Type.DROPLET)
                 .at(x,y)
@@ -333,6 +369,9 @@ public class BattleshipMain extends GameApplication {
     }
 
     private Entity spawnTile(double x, double y) {
+
+
+
         Entity tile = FXGL.entityBuilder()
                 .type(BattleshipMain.Type.TILE)
                 .at(x,y)
@@ -348,7 +387,12 @@ public class BattleshipMain extends GameApplication {
 
             getGameWorld().addEntity(Droplet);
 
+
+
+
         });
+
+
 
         return tile;
     }
@@ -359,7 +403,7 @@ public class BattleshipMain extends GameApplication {
 
 
 
-    public void start(Stage primaryStage) throws Exception {
+    /*public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
 
         BorderPane root = new BorderPane();
@@ -397,10 +441,10 @@ public class BattleshipMain extends GameApplication {
 
             if (enemyTurn) {
                 enemyMove();
-                /*VBox vbox2 = new VBox(50, playerBoard, enemyBoard);
+                VBox vbox2 = new VBox(50, playerBoard, enemyBoard);
                 vbox2.setAlignment(Pos.CENTER);
                 root2.setCenter(vbox2);
-                window.setScene(scene2);*/
+                window.setScene(scene2);
             }
         });
 
@@ -444,7 +488,7 @@ public class BattleshipMain extends GameApplication {
 
 
 
-    }
+    }*/
 
     public static void main(String[] args) {
         launch(args);

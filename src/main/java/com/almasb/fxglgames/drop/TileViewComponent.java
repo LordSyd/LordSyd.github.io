@@ -14,14 +14,12 @@ import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
-/**
- * @author Almas Baimagambetov (almaslvl@gmail.com)
- */
+
 public class TileViewComponent extends ChildViewComponent {
 
     //private TileValue value = TileValue.NONE;
 
-    private Arc arc = new Arc(34, 37, 34, 37, 0, 0);
+
     private Line line1 = new Line(0, 0, 0, 0);
     private Line line2 = new Line(75, 0, 75, 0);
 
@@ -33,9 +31,7 @@ public class TileViewComponent extends ChildViewComponent {
         bg2.setStroke(Color.BLACK);
 
 
-        /*arc.setFill(null);
-        arc.setStroke(Color.BLACK);
-        arc.setStrokeWidth(3);*/
+
 
         line1.setStrokeWidth(3);
         line2.setStrokeWidth(3);
@@ -43,7 +39,7 @@ public class TileViewComponent extends ChildViewComponent {
         line1.setVisible(false);
         line2.setVisible(false);
 
-        getViewRoot().getChildren().addAll(new StackPane(bg, bg2, arc, line1, line2));
+        getViewRoot().getChildren().addAll(new StackPane(bg, bg2, line1, line2));
     }
 
 
