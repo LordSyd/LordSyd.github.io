@@ -30,26 +30,112 @@ public class BattleshipMain extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings settings) {
+
+
         settings.setTitle("Battleship");
         settings.setVersion("1.0");
         settings.setWidth(600);
         settings.setHeight(800);
 
 
+
+
     }
 
     @Override
     protected void initGame() {
+        BoardState State = new BoardState();
+
+        Player player1 = new Player();
+        Player player2 = new Player();
+
+        System.out.println("State before: " + State.getStateOfCell(0,9));
+        State.setStateOfCell(0,9, 2);
+        System.out.println("State after: " + State.getStateOfCell(0,9));
+
+        BorderPane root = new BorderPane();
+        root.setPrefSize(600, 800);
+        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
+
+        enemyBoard = new Board(true, event -> {
+            if (!running)
+                return;
+
+            Cell cell = (Cell) event.getSource();
+            if (cell.wasShot){
+                System.out.println("already shot");
+                return;}
+
+
+
+
+
+            enemyTurn = !cell.shoot();
+
+
+
+            if (enemyBoard.ships == 0) {
+                System.out.println("YOU WIN");
+                System.exit(0);
+            }
+
+            if (enemyTurn)
+                enemyMove();
+        });
+
+        playerBoard = new Board(false, event -> {
+            if (running)
+                return;
+
+            Cell cell = (Cell) event.getSource();
+            if (player1.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
+
+            }
+
+
+
+            System.out.println(player1.getStateOfShipsCell(cell.x, cell.y));
+            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
+                if (--shipsToPlace == 0) {
+                    startGame();
+                }
+            }
+
+
+            System.out.println(cell.localToScene(cell.getLayoutBounds()).getMinX());
+
+            //cell.localToScene(cell.getLayoutBounds()).getMinY()
+
+
+            Entity Droplet = spawnDroplet(cell.localToScene(cell.getLayoutBounds()).getMinX(), cell.localToScene(cell.getLayoutBounds()).getMinY());
+
+            getGameWorld().addEntity(Droplet);
+
+
+
+        });
+
+        VBox vbox = new VBox(50, enemyBoard, playerBoard);
+        vbox.setAlignment(Pos.CENTER);
+
+        root.setCenter(vbox);
+
+        FXGL.getGameScene().addChild(root);
+
+
+
+
+
 
 
     }
 
     @Override
     protected void initUI(){
-        BorderPane root = new BorderPane();
+        /*BorderPane root = new BorderPane();
         root.setPrefSize(600, 800);
         root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
-        FXGL.getGameScene().addUINode(root);
+        //FXGL.getGameScene().addUINode(root);
 
         enemyBoard = new Board(true, event -> {
             if (!running)
@@ -88,13 +174,20 @@ public class BattleshipMain extends GameApplication {
                 }
             }
 
-            spawnDroplet(cell.x, cell.y);
+
+            System.out.println(playerBoard.getBoundsInParent());
+
+            spawnDroplet(68, 20);
+
+
         });
 
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
 
-        root.setCenter(vbox);
+        root.setCenter(vbox);*/
+
+
 
 
     }
@@ -204,12 +297,15 @@ public class BattleshipMain extends GameApplication {
         running = true;
     }
 
-    private void spawnDroplet(int x, int y) {
-        entityBuilder()
+    private Entity spawnDroplet(double x, double y) {
+       Entity Droplet = FXGL.entityBuilder()
                 .type(DropApp.Type.DROPLET)
                 .at(x,y)
                 .viewWithBBox("droplet.png")
-                .buildAndAttach();
+
+                .build();
+
+       return Droplet;
     }
 
 

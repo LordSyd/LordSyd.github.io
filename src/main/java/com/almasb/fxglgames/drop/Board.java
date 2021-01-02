@@ -43,7 +43,7 @@ public class Board extends Parent {
                     Cell cell = getCell(x, i);
                     cell.ship = ship;
                     if (!enemy) {
-                        cell.setFill(Color.WHITE);
+                        cell.setFill(Color.TRANSPARENT);
                         cell.setStroke(Color.GREEN);
                     }
                 }
