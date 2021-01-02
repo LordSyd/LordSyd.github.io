@@ -8,6 +8,8 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
 import javafx.application.Application;
@@ -27,6 +29,10 @@ import static com.almasb.fxgl.dsl.FXGL.loopBGM;
 
 
 public class BattleshipMain extends GameApplication {
+
+    public enum Type {
+        DROPLET,TILE
+    }
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -104,12 +110,15 @@ public class BattleshipMain extends GameApplication {
 
             System.out.println(cell.localToScene(cell.getLayoutBounds()).getMinX());
 
-            //cell.localToScene(cell.getLayoutBounds()).getMinY()
+
 
 
             Entity Droplet = spawnDroplet(cell.localToScene(cell.getLayoutBounds()).getMinX(), cell.localToScene(cell.getLayoutBounds()).getMinY());
 
             getGameWorld().addEntity(Droplet);
+
+
+            //getGameWorld().getEntitiesByType(Type.DROPLET).forEach(droplet -> droplet.);
 
 
 
@@ -118,9 +127,28 @@ public class BattleshipMain extends GameApplication {
         VBox vbox = new VBox(50, enemyBoard, playerBoard);
         vbox.setAlignment(Pos.CENTER);
 
+        //Entity tile = spawnTile(36, 400);
+        //getGameWorld().addEntity(tile);
+
+        //private VBox rows = new VBox()
+
+        for (int y = 0; y < 300; y+=30) {
+            HBox row = new HBox();
+            for (int x = 0; x < 300; x+=30) {
+                Entity tile = spawnTile(x, y);
+                //row.getChildren().add(tile);
+                getGameWorld().addEntity(tile);
+            }
+
+            //rows.getChildren().add(row);
+
+        }
+
+        //getChildren().add(rows);
+
         root.setCenter(vbox);
 
-        FXGL.getGameScene().addChild(root);
+        //FXGL.getGameScene().addChild(root);
 
 
 
@@ -192,9 +220,6 @@ public class BattleshipMain extends GameApplication {
 
     }
 
-    public enum Type {
-        DROPLET
-    }
 
     Scene scene2;
     Stage window;
@@ -299,14 +324,37 @@ public class BattleshipMain extends GameApplication {
 
     private Entity spawnDroplet(double x, double y) {
        Entity Droplet = FXGL.entityBuilder()
-                .type(DropApp.Type.DROPLET)
+                .type(BattleshipMain.Type.DROPLET)
                 .at(x,y)
                 .viewWithBBox("droplet.png")
-
                 .build();
 
        return Droplet;
     }
+
+    private Entity spawnTile(double x, double y) {
+        Entity tile = FXGL.entityBuilder()
+                .type(BattleshipMain.Type.TILE)
+                .at(x,y)
+                .with(new TileViewComponent())
+                .build();
+
+
+
+        tile.getViewComponent().addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
+            System.out.println("clicked");
+
+            Entity Droplet = spawnDroplet(tile.getX(), tile.getY());
+
+            getGameWorld().addEntity(Droplet);
+
+        });
+
+        return tile;
+    }
+
+
+
 
 
 

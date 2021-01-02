@@ -1,6 +1,6 @@
 package com.almasb.fxglgames.drop;
 
-import javafx.scene.paint.Color;
+
 
 
 public class Player {
@@ -77,7 +77,6 @@ public class Player {
                 if (!ships.isValidPoint(i, y))
                     return false;
 
-                //Board.Cell cell = getCell(i, y);
                 if (ships.getStateOfCell(i, y) != 0)
                     return false;
 
