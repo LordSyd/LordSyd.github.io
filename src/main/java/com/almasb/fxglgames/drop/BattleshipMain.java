@@ -8,6 +8,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.components.IDComponent;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -33,6 +34,11 @@ import static com.almasb.fxgl.dsl.FXGL.loopBGM;
 
 public class BattleshipMain extends GameApplication {
 
+    static Player player1 = new Player();
+    static Player player2 = new Player();
+    static int player1ShipsToPlace = 5;
+    static boolean gameRunning = false;
+
     public enum Type {
         DROPLET,TILE
     }
@@ -43,7 +49,7 @@ public class BattleshipMain extends GameApplication {
 
         settings.setTitle("Battleship");
         settings.setVersion("1.0");
-        settings.setWidth(600);
+        settings.setWidth(1200);
         settings.setHeight(800);
 
 
@@ -67,21 +73,22 @@ public class BattleshipMain extends GameApplication {
     protected void initGame() {
 
         getGameWorld().addEntityFactory(new TileFactory());
+        getGameWorld().addEntityFactory(new ShipFactory());
+
 
         BoardState State = new BoardState();
 
-        Player player1 = new Player();
-        Player player2 = new Player();
+
 
         System.out.println("State before: " + State.getStateOfCell(0,9));
         State.setStateOfCell(0,9, 2);
         System.out.println("State after: " + State.getStateOfCell(0,9));
 
-        BorderPane root = new BorderPane();
+       /* BorderPane root = new BorderPane();
         root.setPrefSize(600, 800);
-        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
+        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));*/
 
-        enemyBoard = new Board(true, event -> {
+        /*enemyBoard = new Board(true, event -> {
             if (!running)
                 return;
 
@@ -105,9 +112,9 @@ public class BattleshipMain extends GameApplication {
 
             if (enemyTurn)
                 enemyMove();
-        });
+        });*/
 
-        playerBoard = new Board(false, event -> {
+        /*playerBoard = new Board(false, event -> {
             if (running)
                 return;
 
@@ -123,10 +130,10 @@ public class BattleshipMain extends GameApplication {
                 if (--shipsToPlace == 0) {
                     startGame();
                 }
-            }
+            }*/
 
 
-            System.out.println(cell.localToScene(cell.getLayoutBounds()).getMinX());
+          /*  System.out.println(cell.localToScene(cell.getLayoutBounds()).getMinX());
 
 
 
@@ -140,51 +147,28 @@ public class BattleshipMain extends GameApplication {
 
 
 
-        });
+        });*/
 
-        VBox vbox = new VBox(50, enemyBoard, playerBoard);
-        vbox.setAlignment(Pos.CENTER);
-
-        //Entity tile = spawnTile(36, 400);
-        //getGameWorld().addEntity(tile);
-
-        //private VBox rows = new VBox()
-
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
-                //Entity tile = spawnTile(x*30, y*30);
-                shipBoard[x][y] = spawn("tile", x * 30, y * 30);
-                //getGameWorld().addEntity(tile);
-            }
-
-            //rows.getChildren().add(row);
-
-        }
-
-        final int START_X = 68;
-        final int START_Y = 420;
-
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
-                //Entity tile = spawnTile(x*30, y*30);
-                Entity tile = spawn("tile", x * 30 + START_X, y * 30 + START_Y);
-                //getGameWorld().addEntity(tile);
-                tile.setProperty("x", x);
-                tile.setProperty("y", y);
-
-            }
+       /* VBox vbox = new VBox(50, enemyBoard, playerBoard);
+        vbox.setAlignment(Pos.CENTER);*/
 
 
-            //rows.getChildren().add(row);
+        //Spawn  hitBoard
+        spawnHitBoard(1);
+        spawnHitBoard(2);
 
-        }
+        //Spawn shipBoard
+
+        spawnShipBoard(1);
+        spawnShipBoard(2);
 
 
-        //getChildren().add(rows);
 
-        root.setCenter(vbox);
 
-        //FXGL.getGameScene().addChild(root);
+
+        /*root.setCenter(vbox);*/
+
+
 
 
 
@@ -259,6 +243,75 @@ public class BattleshipMain extends GameApplication {
 
     Scene scene2;
     Stage window;
+
+    private void spawnShipBoard(int player){
+        int startX = 0;
+        int startY = 0;
+
+        switch (player){
+            case 1 -> {
+                startX = 68;
+                startY = 420;
+            }
+
+            case 2 -> {
+                startX = 600;
+                startY = 420;
+            }
+        }
+
+
+
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 10; x++) {
+
+                Entity tile = spawn("tile", x * 30 + startX, y * 30 + startY);
+
+                tile.setProperty("x", x);
+                tile.setProperty("y", y);
+                tile.setProperty("boardType", "ship");
+                tile.setProperty("Player", player);
+                TileFactory.shipTiles.add(tile);
+
+            }
+
+        }
+    }
+
+    private void spawnHitBoard(int player){
+        int startX = 0;
+        int startY = 0;
+
+        switch (player){
+            case 1 -> {
+                startX = 68;
+                startY = 60;
+            }
+
+            case 2 -> {
+                startX = 600;
+                startY = 60;
+            }
+        }
+
+
+        for (int y = 0; y < 10; y++) {
+            for (int x = 0; x < 10; x++) {
+
+                Entity tile = spawn("tile", x * 30 + startX, y * 30 + startY);
+
+                tile.setProperty("x", x);
+                tile.setProperty("y", y);
+                tile.setProperty("boardType", "hit");
+                tile.setProperty("Player", player);
+                TileFactory.hitTiles.add(tile);
+
+            }
+
+        }
+    }
+
+
 
 
     private boolean running = false;
@@ -359,43 +412,21 @@ public class BattleshipMain extends GameApplication {
     }
 
     static Entity spawnDroplet(double x, double y) {
+        
+        //String path = this.getClass().getResource("/assets/textures/ship_1x5.png").toExternalForm();
+
+
        Entity Droplet = FXGL.entityBuilder()
                 .type(BattleshipMain.Type.DROPLET)
                 .at(x,y)
-                .viewWithBBox("droplet.png")
+                .viewWithBBox("ship_1x5.png")
                 .build();
 
        return Droplet;
     }
 
-    private Entity spawnTile(double x, double y) {
 
 
-
-        Entity tile = FXGL.entityBuilder()
-                .type(BattleshipMain.Type.TILE)
-                .at(x,y)
-                .with(new TileViewComponent())
-                .build();
-
-
-
-        tile.getViewComponent().addEventHandler(MouseEvent.MOUSE_CLICKED, e ->{
-            System.out.println("clicked");
-
-            Entity Droplet = spawnDroplet(tile.getX(), tile.getY());
-
-            getGameWorld().addEntity(Droplet);
-
-
-
-
-        });
-
-
-
-        return tile;
-    }
 
 
 
