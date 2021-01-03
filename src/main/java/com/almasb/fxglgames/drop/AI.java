@@ -40,7 +40,16 @@ public class AI {
             Random randomGenerator=new Random();
 
             /*
-                int Schuss = randomGenerator.nextInt(100) + 1);
+                int SchussX = randomGenerator.nextInt(10) + 1);
+                int SchussY = randomGenerator.nextInt(10) + 1); // +1 für Inklusion der Nummer 10
+
+                hit(SchussX, SchussY); //übergeben an HitMethode
+
+                if (tile.getProperties().getValue(SchussX) == true && tile.getProperties().getValue(SchussY) == true ) {
+
+                 }
+
+
                 if (HitMethode == 1) sofern Treffer auf Schiff führen
 
                 getroffen ?
