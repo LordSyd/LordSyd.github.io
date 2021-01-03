@@ -50,10 +50,10 @@ public class AI {
 
 
 
-    }
 
 
 
+/*
     //Computer schießt um das Schiff herum
 //Vorsicht nicht über das Spielfeld hinausschießen
 //Wenn Computer Schiff trifft x-Achse abfragen (links rechts), //wenn nicht y-Achse abfragen bis Schüsse ins Leere gehen
