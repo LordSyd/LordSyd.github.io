@@ -38,7 +38,20 @@ public class AI {
 // nextInt ist normalerweise exklusive des höchsten wertes, deswegen plus +1
 
         int RNG = ThreadLocalRandom.current().nextInt(min, max + 1);
+class GenerateRandomInRangeMain {
 
+    public static void main(String[] args) {
+
+        System.out.println("============================");
+        System.out.println("Generating 10 random integer in range of 0 to 10 using Random");
+        System.out.println("============================");
+        Random randomGenerator=new Random();
+        for (int i = 0; i < 10; i++) {
+            System.out.println(randomGenerator.nextInt(100) + 1);
+        }
+
+    }
+}
 
 
 
