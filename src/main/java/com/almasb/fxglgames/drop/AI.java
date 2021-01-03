@@ -1,17 +1,18 @@
 package com.almasb.fxglgames.drop;
 
-import java.util.concurrent.ThreadLocalRandom; // RNG Import
+import java.util.Random;
 
 
 public class AI {
 /*
+//Zugtimer??
 // https://github.com/GrahamBlanshard/AI-Battleship/blob/master/prograham/battleship/player/AIPlayer.java
     public void placeShip()
     {
         Random generator = new Random();	//Used to simulate computer "guessing"
         Boolean successful = false;
         boolean direction;
-
+//DODO
         // Iterate through ships and place them
         for (Ship c : ships) {
             do {
@@ -29,33 +30,29 @@ public class AI {
         }
     }
 
-//Zugtimer??
+
+*/
 
     //Computer schießt zufällig auf der Karte umher
-    public void EasyAI (AnzahlSpielfelder[][])
+    public void EasyAI ()
     {
 
-// nextInt ist normalerweise exklusive des höchsten wertes, deswegen plus +1
+            Random randomGenerator=new Random();
 
-        int RNG = ThreadLocalRandom.current().nextInt(min, max + 1);
-class GenerateRandomInRangeMain {
 
-    public static void main(String[] args) {
+            for (int i = 0; i < 10; i++) {
+                System.out.println(randomGenerator.nextInt(100) + 1);
+            }
 
-        System.out.println("============================");
-        System.out.println("Generating 10 random integer in range of 0 to 10 using Random");
-        System.out.println("============================");
-        Random randomGenerator=new Random();
-        for (int i = 0; i < 10; i++) {
-            System.out.println(randomGenerator.nextInt(100) + 1);
-        }
+           //  HitMethode
 
     }
-}
 
 
 
     }
+
+
 
     //Computer schießt um das Schiff herum
 //Vorsicht nicht über das Spielfeld hinausschießen
