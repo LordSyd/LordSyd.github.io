@@ -12,7 +12,7 @@ public class AI {
         Random generator = new Random();	//Used to simulate computer "guessing"
         Boolean successful = false;
         boolean direction;
-//DODO
+
         // Iterate through ships and place them
         for (Ship c : ships) {
             do {
@@ -33,18 +33,23 @@ public class AI {
 
 */
 
-    //Computer schießt zufällig auf der Karte umher
+
     public void EasyAI ()
     {
 
             Random randomGenerator=new Random();
 
+            /*
+                int Schuss = randomGenerator.nextInt(100) + 1);
+                if (HitMethode == 1) sofern Treffer auf Schiff führen
 
-            for (int i = 0; i < 10; i++) {
-                System.out.println(randomGenerator.nextInt(100) + 1);
-            }
+                getroffen ?
 
-           //  HitMethode
+                übergeben an HitMethode
+
+
+             */
+
 
     }
 
@@ -78,7 +83,7 @@ public class AI {
     public void HardAI (AnzahlSpielfelder)
     {
 
-// nextInt ist normalerweise exklusive des höchsten wertes, deswegen plus +1
+        // nextInt ist normalerweise exklusive des höchsten wertes, deswegen plus +1
 
         int RNG = ThreadLocalRandom.current().nextInt(min, max + 1);
 
