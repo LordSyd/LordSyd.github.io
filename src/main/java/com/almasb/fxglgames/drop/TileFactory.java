@@ -113,19 +113,20 @@ public class TileFactory implements EntityFactory {
             switch (tileType) {
 
                 case "ship" -> {
-                    if (!BattleshipMain.gameRunning)
-                    switch (playerId) {
-                        case 1 -> { {
+                    if (!BattleshipMain.gameRunning) {
+                        switch (playerId) {
+                            case 1 -> {
+                                {
 
-                            if (
-                                    BattleshipMain.player1.placeShip(new Ship(BattleshipMain.player1ShipsToPlace,
-                                                    e.getButton() == MouseButton.PRIMARY),
-                                            tile.getProperties().getValue("x"),  tile.getProperties().getValue("y"))){
-                                System.out.println("Ship");
+                                    if (
+                                            BattleshipMain.player1.placeShip(new Ship(BattleshipMain.player1ShipsToPlace,
+                                                            e.getButton() == MouseButton.PRIMARY),
+                                                    tile.getProperties().getValue("x"), tile.getProperties().getValue("y"))) {
+                                        System.out.println("Ship");
 
-                                //Todo get board check to run on scene transition
+                                        //Todo get board check to run on scene transition
 
-                                getBoardState(tileType);
+                                        getBoardState(tileType);
 
                                /* Entity temp;
 
@@ -147,16 +148,21 @@ public class TileFactory implements EntityFactory {
                                 }*/
 
 
-                                if (--BattleshipMain.player1ShipsToPlace == 0){
+                                        if (--BattleshipMain.player1ShipsToPlace == 0) {
 
-                                    BattleshipMain.gameRunning = true;
-                                    //todo exchange test for menu with real player change submenu
-                                    BattleshipMain.showStartMenu();
+                                            BattleshipMain.gameRunning = true;
+                                            //todo exchange test for menu with real player change submenu
+                                            BattleshipMain.showStartMenu();
+                                        }
+
+                                    }
                                 }
-
                             }
-                        }}
-                        case 2 -> {}
+                            case 2 -> {
+                            }
+                        }
+                    }else{
+                        return;
                     }
                    /* {
 
