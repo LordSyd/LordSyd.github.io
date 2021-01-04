@@ -23,12 +23,15 @@ public class TileViewComponent extends ChildViewComponent {
     private Line line1 = new Line(0, 0, 0, 0);
     private Line line2 = new Line(75, 0, 75, 0);
 
-    public TileViewComponent() {
-        Rectangle bg = new Rectangle(30, 30, Color.GREY);
+    public TileViewComponent(Color color) {
+
+        Rectangle bg = new Rectangle(30, 30, color);
 
         Rectangle bg2 = new Rectangle(31, 31, Color.rgb(250, 250, 250, 0.25));
         bg2.setStrokeWidth(2);
         bg2.setStroke(Color.BLACK);
+
+
 
 
 

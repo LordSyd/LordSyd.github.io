@@ -5,6 +5,9 @@ import java.util.Random;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.app.scene.MenuType;
+import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 
@@ -30,13 +33,28 @@ public class BattleshipMain extends GameApplication {
     static int player1ShipsToPlace = 5;
     static int player2ShipsToPlace = 5;
     static boolean gameRunning = false;
+    static boolean player1Turn = true;
 
     public enum Type {
         DROPLET,TILE
     }
 
+
+
     @Override
     protected void initSettings(GameSettings settings) {
+
+        settings.setMainMenuEnabled(true);
+
+        /*settings.setSceneFactory(new SceneFactory() {
+            @Override
+            public FXGLMenu newMainMenu() {
+                return new MainMenu(MenuType.MAIN_MENU);
+            }
+        });*/
+
+
+
 
 
         settings.setTitle("Battleship");
@@ -49,7 +67,7 @@ public class BattleshipMain extends GameApplication {
 
     }
 
-    public Entity[][] shipBoard = new Entity[10][10];
+    /*public Entity[][] shipBoard = new Entity[10][10];
 
     public Entity[][] hitBoard = new Entity[10][10];
 
@@ -59,14 +77,28 @@ public class BattleshipMain extends GameApplication {
 
     public Entity[][] getHitBoard() {
         return hitBoard;
-    }
+    }*/
+
+
 
     @Override
     protected void initGame() {
 
+
+
         getGameWorld().addEntityFactory(new TileFactory());
         getGameWorld().addEntityFactory(new ShipFactory());
 
+       //getSceneService().pushSubScene(new StartMenuSubScene());
+
+        //Spawn  hitBoard
+        spawnHitBoard(1);
+        spawnHitBoard(2);
+
+        //Spawn shipBoard
+
+        spawnShipBoard(1);
+        spawnShipBoard(2);
 
 
 
@@ -139,14 +171,7 @@ public class BattleshipMain extends GameApplication {
         vbox.setAlignment(Pos.CENTER);*/
 
 
-        //Spawn  hitBoard
-        spawnHitBoard(1);
-        spawnHitBoard(2);
 
-        //Spawn shipBoard
-
-        spawnShipBoard(1);
-        spawnShipBoard(2);
 
 
 
@@ -315,7 +340,7 @@ public class BattleshipMain extends GameApplication {
 
 
 
-    private boolean running = false;
+    /*private boolean running = false;
     private Board enemyBoard, playerBoard;
 
     private int shipsToPlace = 5;
@@ -376,9 +401,9 @@ public class BattleshipMain extends GameApplication {
         root.setCenter(vbox);
 
         return root;
-    }
+    }*/
 
-    private void enemyMove() {
+   /* private void enemyMove() {
         while (enemyTurn) {
             int x = random.nextInt(10);
             int y = random.nextInt(10);
@@ -394,9 +419,9 @@ public class BattleshipMain extends GameApplication {
                 System.exit(0);
             }
         }
-    }
+    }*/
 
-    private void startGame() {
+    /*private void startGame() {
         // place enemy ships
         int type = 5;
 
@@ -410,9 +435,9 @@ public class BattleshipMain extends GameApplication {
         }
 
         running = true;
-    }
+    }*/
 
-    static Entity spawnDroplet(double x, double y) {
+    /*static Entity spawnDroplet(double x, double y) {
         
         //String path = this.getClass().getResource("/assets/textures/ship_1x5.png").toExternalForm();
 
@@ -424,7 +449,7 @@ public class BattleshipMain extends GameApplication {
                 .build();
 
        return Droplet;
-    }
+    }*/
 
 
 

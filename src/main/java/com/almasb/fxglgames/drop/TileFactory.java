@@ -7,10 +7,12 @@ import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.IDComponent;
+import com.almasb.fxgl.entity.components.ViewComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import java.util.Iterator;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class TileFactory implements EntityFactory {
+
+
 
     protected static void getBoardState(String boardToCheck){
         Entity temp;
@@ -37,7 +41,12 @@ public class TileFactory implements EntityFactory {
                             (BattleshipMain.player1.getStateOfShipsCell(temp.getProperties().getValue("x"),  temp.getProperties().getValue("y")) == 1) &&
                                     (tempId == 1)
                     ){
-                        temp.getViewComponent().setOpacity(0.5);
+                        TileViewComponent blue = new TileViewComponent(Color.BLUE);
+
+
+                        temp.removeComponent(TileViewComponent.class);
+
+                        temp.addComponent(blue);
 
                     }
                 }
@@ -72,6 +81,7 @@ public class TileFactory implements EntityFactory {
 
         Ship ship = null;
 
+        TileViewComponent original = new TileViewComponent(Color.GRAY);
 
 
 
@@ -82,11 +92,12 @@ public class TileFactory implements EntityFactory {
 
 
 
-        var tile = FXGL.entityBuilder(data)
+
+        var tile = entityBuilder(data)
 
                 //.type(BattleshipMain.Type.TILE)
                 .bbox(new HitBox(BoundingShape.box(30,30)))
-                .with(new TileViewComponent())
+                .with(original)
                 .build();
 
         //todo remove duplicate tiletype
@@ -124,7 +135,7 @@ public class TileFactory implements EntityFactory {
                                                     tile.getProperties().getValue("x"), tile.getProperties().getValue("y"))) {
                                         System.out.println("Ship");
 
-                                        //Todo get board check to run on scene transition
+
 
                                         getBoardState(tileType);
 
@@ -217,7 +228,7 @@ public class TileFactory implements EntityFactory {
 
             }
 
-            //todo find fix for texture loading bug
+            //todo find fix for texture loading bug (backlog)
            //spawn("ship", tile.getX(), tile.getY());
 
             getBoardState(tileType);

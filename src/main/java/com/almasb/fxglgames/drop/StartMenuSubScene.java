@@ -25,8 +25,11 @@ public class StartMenuSubScene  extends SubScene implements EventHandler<ActionE
         bg.setStroke(Color.WHITE);
         bg.setStrokeWidth(10);
 
-        var button = new FXGLButton();
+        var button = new FXGLButton("Test");
         button.setOnAction(this);
+        button.setTranslateX(100);
+        button.setTranslateY(400);
+
 
 
         var stackPane = new StackPane(bg, text);
