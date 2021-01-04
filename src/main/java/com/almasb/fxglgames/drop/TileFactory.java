@@ -20,6 +20,32 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class TileFactory implements EntityFactory {
 
+    protected static void getBoardState(String boardToCheck){
+        Entity temp;
+
+
+        switch (boardToCheck){
+            case "ship" -> {
+                Iterator<Entity>  iterator = shipTiles.iterator();
+                for (int i = 0; i < shipTiles.size(); i++){
+                    temp = iterator.next();
+                    int tempId = temp.getProperties().getValue("Player");
+
+
+
+                    if (
+                            (BattleshipMain.player1.getStateOfShipsCell(temp.getProperties().getValue("x"),  temp.getProperties().getValue("y")) == 1) &&
+                                    (tempId == 1)
+                    ){
+                        temp.getViewComponent().setOpacity(0.5);
+
+                    }
+                }
+            }
+        }
+
+    }
+
     static ArrayList<Entity> shipTiles = new ArrayList<Entity>();
     static ArrayList<Entity> hitTiles = new ArrayList<Entity>();
 
@@ -35,6 +61,10 @@ public class TileFactory implements EntityFactory {
 
     @Spawns("tile")
     public Entity newTile(SpawnData data) {
+
+
+
+
 
 
 
@@ -58,6 +88,12 @@ public class TileFactory implements EntityFactory {
                 .bbox(new HitBox(BoundingShape.box(30,30)))
                 .with(new TileViewComponent())
                 .build();
+
+        //todo remove duplicate tiletype
+
+        /*String tiletype = tile.getProperties().getValue("boardType");
+
+        getBoardState(tiletype, tile);*/
 
 
 
@@ -87,7 +123,11 @@ public class TileFactory implements EntityFactory {
                                             tile.getProperties().getValue("x"),  tile.getProperties().getValue("y"))){
                                 System.out.println("Ship");
 
-                                Entity temp;
+                                //Todo get board check to run on scene transition
+
+                                getBoardState(tileType);
+
+                               /* Entity temp;
 
                                 Iterator<Entity>  iterator = shipTiles.iterator();
                                 for (int i = 0; i < shipTiles.size(); i++){
@@ -104,12 +144,14 @@ public class TileFactory implements EntityFactory {
                                         int tempState = BattleshipMain.player1.getStateOfShipsCell(tile.getProperties().getValue("x"),  tile.getProperties().getValue("y"));
                                         System.out.println("Temp:" + tempState);
                                     }
-                                }
+                                }*/
 
 
                                 if (--BattleshipMain.player1ShipsToPlace == 0){
 
                                     BattleshipMain.gameRunning = true;
+                                    //todo exchange test for menu with real player change submenu
+                                    BattleshipMain.showStartMenu();
                                 }
 
                             }
@@ -152,12 +194,31 @@ public class TileFactory implements EntityFactory {
                          }
                     }*/
                 }
-                case "hit" -> System.out.println("Hit");
+                case "hit" -> {
+                    if (BattleshipMain.gameRunning) {
+
+                        switch (playerId) {
+                            case 1 -> {
+                                //todo: hook up boolean return to player change
+                                BattleshipMain.player2.shoot(tile.getProperties().getValue("x"), tile.getProperties().getValue("y"));
+                            }
+                            case 2 -> BattleshipMain.player1.shoot(tile.getProperties().getValue("x"), tile.getProperties().getValue("y"));
+                        }
+
+                    }
+                }
 
 
             }
 
-           spawn("ship", tile.getX(), tile.getY());
+            //todo find fix for texture loading bug
+           //spawn("ship", tile.getX(), tile.getY());
+
+            getBoardState(tileType);
+
+
+
+
 
 
 
@@ -170,6 +231,7 @@ public class TileFactory implements EntityFactory {
 
 
         });
+
 
 
 
@@ -192,3 +254,5 @@ public class TileFactory implements EntityFactory {
     }
 
 }
+
+

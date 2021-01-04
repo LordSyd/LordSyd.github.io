@@ -6,17 +6,11 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
-import com.almasb.fxgl.entity.components.IDComponent;
-import com.almasb.fxgl.entity.components.ViewComponent;
-import com.almasb.fxgl.physics.BoundingShape;
-import com.almasb.fxgl.physics.HitBox;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 
-import static com.almasb.fxgl.dsl.FXGL.getGameWorld;
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 
 public class ShipFactory implements EntityFactory {
+
 
 
 
@@ -25,13 +19,10 @@ public class ShipFactory implements EntityFactory {
     public Entity newShip(SpawnData data) {
 
 
-
-
-
         var ship = FXGL.entityBuilder(data)
 
                 //.type(BattleshipMain.Type.TILE)
-                .view("ship_1x5.png")
+                .viewWithBBox("assets/textures/ship_1x5.png")
                 .build();
 
 

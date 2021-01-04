@@ -5,17 +5,9 @@ import java.util.Random;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.EntityFactory;
-import com.almasb.fxgl.entity.components.IDComponent;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.util.Duration;
 
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,7 +21,6 @@ import com.almasb.fxglgames.drop.Board.Cell;
 
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.almasb.fxgl.dsl.FXGL.loopBGM;
 
 
 public class BattleshipMain extends GameApplication {
@@ -37,6 +28,7 @@ public class BattleshipMain extends GameApplication {
     static Player player1 = new Player();
     static Player player2 = new Player();
     static int player1ShipsToPlace = 5;
+    static int player2ShipsToPlace = 5;
     static boolean gameRunning = false;
 
     public enum Type {
@@ -76,13 +68,7 @@ public class BattleshipMain extends GameApplication {
         getGameWorld().addEntityFactory(new ShipFactory());
 
 
-        BoardState State = new BoardState();
 
-
-
-        System.out.println("State before: " + State.getStateOfCell(0,9));
-        State.setStateOfCell(0,9, 2);
-        System.out.println("State after: " + State.getStateOfCell(0,9));
 
        /* BorderPane root = new BorderPane();
         root.setPrefSize(600, 800);
@@ -244,7 +230,22 @@ public class BattleshipMain extends GameApplication {
     Scene scene2;
     Stage window;
 
-    private void spawnShipBoard(int player){
+    static protected void showStartMenu(){
+        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+        getSceneService().pushSubScene(new StartMenuSubScene());
+    }
+
+    static protected void closeStartMenu(){
+        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+        getSceneService().popSubScene();
+
+        spawnHitBoard(1);
+        spawnShipBoard(1);
+
+    }
+
+
+    private static void spawnShipBoard(int player){
         int startX = 0;
         int startY = 0;
 
@@ -278,7 +279,7 @@ public class BattleshipMain extends GameApplication {
         }
     }
 
-    private void spawnHitBoard(int player){
+    private static void spawnHitBoard(int player){
         int startX = 0;
         int startY = 0;
 
@@ -419,7 +420,7 @@ public class BattleshipMain extends GameApplication {
        Entity Droplet = FXGL.entityBuilder()
                 .type(BattleshipMain.Type.DROPLET)
                 .at(x,y)
-                .viewWithBBox("ship_1x5.png")
+                .viewWithBBox("assets/textures/ship_1x5.png")
                 .build();
 
        return Droplet;
