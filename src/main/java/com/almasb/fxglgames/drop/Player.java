@@ -8,7 +8,9 @@ public class Player {
 
     private BoardState ships = new BoardState();
     private BoardState shots = new BoardState();
-    private int health = 1; //numbers of tiles per ship type
+
+    //todo change player health to correct logic after testing is finished
+    private int health = 2; //numbers of tiles per ship type
 
     public Player() {
     }
@@ -23,7 +25,7 @@ public class Player {
 
     public boolean shoot(int x, int y){
         /**
-         * returns true
+         * returns
          */
         if (shots.getStateOfCell(x,y) != 0){
             return false;

@@ -9,7 +9,7 @@ import com.almasb.fxgl.entity.Entity;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-
+//todo fix placement of boards
 
 public class BattleshipMain extends GameApplication {
 
@@ -32,7 +32,7 @@ public class BattleshipMain extends GameApplication {
     @Override
     protected void initSettings(GameSettings settings) {
 
-        settings.setMainMenuEnabled(false);
+        settings.setMainMenuEnabled(true);
 
 
 

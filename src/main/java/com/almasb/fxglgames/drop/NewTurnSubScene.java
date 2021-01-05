@@ -13,6 +13,8 @@ import javax.swing.*;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+//todo get rid of placeholder text
+
 public class NewTurnSubScene  extends SubScene implements EventHandler<ActionEvent> {
 
 

@@ -68,8 +68,8 @@ public class ClickBehaviourComponent extends Component implements EventHandler<M
                                 if (--BattleshipMain.player1ShipsToPlace == 0) {
 
                                     BattleshipMain.gameRunning = true;
-                                    //todo exchange test for menu with real player change submenu
-                                    /*BattleshipMain.showStartMenu();*/
+
+
                                 }
 
                             }
@@ -122,7 +122,7 @@ public class ClickBehaviourComponent extends Component implements EventHandler<M
 
                     switch (playerId) {
                         case 1 -> {
-                            //todo: hook up boolean return to player change
+
                             BattleshipMain.player2.shoot(tile.getProperties().getValue("x"), tile.getProperties().getValue("y"));
                         }
                         case 2 -> BattleshipMain.player1.shoot(tile.getProperties().getValue("x"), tile.getProperties().getValue("y"));
