@@ -46,6 +46,7 @@ public class StartMenuSubScene  extends SubScene implements EventHandler<ActionE
         System.out.println("pressed");
 
         BattleshipMain.closeStartMenu();
-        TileFactory.getBoardState("ship");
+        TileFactory.getBoardState("ship",1);
+        TileFactory.getBoardState("ship",2);
     }
 }

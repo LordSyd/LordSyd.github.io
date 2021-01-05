@@ -8,6 +8,7 @@ public class Player {
 
     private BoardState ships = new BoardState();
     private BoardState shots = new BoardState();
+    private int health = 1; //numbers of tiles per ship type
 
     public Player() {
     }
@@ -16,12 +17,21 @@ public class Player {
         return ships.getStateOfCell(x, y);
     }
 
+    public int getStateOfHitCell(int x, int y) {
+        return shots.getStateOfCell(x, y);
+    }
+
     public boolean shoot(int x, int y){
+        /**
+         * returns true
+         */
         if (shots.getStateOfCell(x,y) != 0){
             return false;
         }else{
             if (ships.getStateOfCell(x,y) == 1){
                 shots.setStateOfCell(x,y, 2);
+                hit();
+                return false;
             }else{
                 shots.setStateOfCell(x,y, 1);
             }
@@ -53,6 +63,12 @@ public class Player {
 
         return false;
 
+    }
+
+    public boolean isDead(){return health == 0;};
+
+    public void hit() {
+        health--;
     }
 
     private boolean canPlaceShip(Ship ship, int x, int y) {

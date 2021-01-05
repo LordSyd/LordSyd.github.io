@@ -28,6 +28,8 @@ public class MainMenu extends FXGLMenu {
 
     }
 
+    
+
     @Override
     protected Button createActionButton(String name, Runnable action) {
         return new Button(name);

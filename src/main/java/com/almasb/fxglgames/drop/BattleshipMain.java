@@ -1,27 +1,12 @@
 package com.almasb.fxglgames.drop;
 
 
-import java.util.Random;
-
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.app.scene.FXGLMenu;
-import com.almasb.fxgl.app.scene.MenuType;
-import com.almasb.fxgl.app.scene.SceneFactory;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
-import com.almasb.fxglgames.drop.Board.Cell;
-
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -34,6 +19,9 @@ public class BattleshipMain extends GameApplication {
     static int player2ShipsToPlace = 5;
     static boolean gameRunning = false;
     static boolean player1Turn = true;
+    static boolean betweenTurnMenuActive = false;
+
+    int deadPlayer = 0;
 
     public enum Type {
         DROPLET,TILE
@@ -44,7 +32,9 @@ public class BattleshipMain extends GameApplication {
     @Override
     protected void initSettings(GameSettings settings) {
 
-        settings.setMainMenuEnabled(true);
+        settings.setMainMenuEnabled(false);
+
+
 
         /*settings.setSceneFactory(new SceneFactory() {
             @Override
@@ -89,16 +79,16 @@ public class BattleshipMain extends GameApplication {
         getGameWorld().addEntityFactory(new TileFactory());
         getGameWorld().addEntityFactory(new ShipFactory());
 
-       //getSceneService().pushSubScene(new StartMenuSubScene());
+
 
         //Spawn  hitBoard
         spawnHitBoard(1);
-        spawnHitBoard(2);
+
 
         //Spawn shipBoard
 
         spawnShipBoard(1);
-        spawnShipBoard(2);
+
 
 
 
@@ -190,6 +180,29 @@ public class BattleshipMain extends GameApplication {
     }
 
     @Override
+    protected void onUpdate(double tpf) {
+        deadPlayer = checkPlayerDead();
+
+        if (deadPlayer != 0){
+            showGameOverMenu();
+        }
+        TileFactory.updateBoardState();
+        if (betweenTurnMenuActive){
+            showTurnMenu();
+        }
+    }
+
+    private int checkPlayerDead() {
+        if (player1.isDead()){
+            return 1;
+        }else if (player2.isDead()){
+            return 2;
+        }else{
+            return 0;
+        }
+    }
+
+    @Override
     protected void initUI(){
         /*BorderPane root = new BorderPane();
         root.setPrefSize(600, 800);
@@ -252,13 +265,68 @@ public class BattleshipMain extends GameApplication {
     }
 
 
-    Scene scene2;
-    Stage window;
+   /* Scene scene2;
+    Stage window;*/
 
     static protected void showStartMenu(){
         getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
         getSceneService().pushSubScene(new StartMenuSubScene());
     }
+
+    static protected void showTurnMenu(){
+        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+        if (player1Turn){
+            getSceneService().pushSubScene(new NewTurnSubScene(1, gameRunning));
+        }else{
+            getSceneService().pushSubScene(new NewTurnSubScene(2, gameRunning));
+        }
+
+    }
+
+    protected void showGameOverMenu(){
+        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+
+            getSceneService().pushSubScene(new GameOverScreen(deadPlayer));
+    }
+
+    static protected void clearTileArrays(){
+        TileFactory.player1shipTiles.clear();
+        TileFactory.player2shipTiles.clear();
+        TileFactory.player1hitTiles.clear();
+        TileFactory.player2hitTiles.clear();
+    }
+
+    static protected void closeTurnMenu(){
+        betweenTurnMenuActive = false;
+        clearTileArrays();
+
+        /*if (player1Turn){
+            player1Turn = false;
+        }*/
+
+        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+        getSceneService().popSubScene();
+
+        if (player1Turn){
+            spawnHitBoard(1);
+            spawnShipBoard(1);
+        }else{
+            spawnHitBoard(2);
+            spawnShipBoard(2);
+        }
+
+
+
+        if (player1ShipsToPlace == 0 && player2ShipsToPlace ==0){
+
+            gameRunning = true;
+        }
+
+
+
+
+    }
+
 
     static protected void closeStartMenu(){
         getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
@@ -271,6 +339,8 @@ public class BattleshipMain extends GameApplication {
 
 
     private static void spawnShipBoard(int player){
+
+
         int startX = 0;
         int startY = 0;
 
@@ -297,7 +367,12 @@ public class BattleshipMain extends GameApplication {
                 tile.setProperty("y", y);
                 tile.setProperty("boardType", "ship");
                 tile.setProperty("Player", player);
-                TileFactory.shipTiles.add(tile);
+                if (player == 1){
+                    TileFactory.player1shipTiles.add(tile);
+                }else{
+                    TileFactory.player2shipTiles.add(tile);
+                }
+
 
             }
 
@@ -305,6 +380,8 @@ public class BattleshipMain extends GameApplication {
     }
 
     private static void spawnHitBoard(int player){
+        TileFactory.player1hitTiles.clear();
+        TileFactory.player2hitTiles.clear();
         int startX = 0;
         int startY = 0;
 
@@ -330,7 +407,11 @@ public class BattleshipMain extends GameApplication {
                 tile.setProperty("y", y);
                 tile.setProperty("boardType", "hit");
                 tile.setProperty("Player", player);
-                TileFactory.hitTiles.add(tile);
+                if (player == 1){
+                    TileFactory.player1hitTiles.add(tile);
+                }else{
+                    TileFactory.player2hitTiles.add(tile);
+                }
 
             }
 
