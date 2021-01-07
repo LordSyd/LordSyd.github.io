@@ -13,6 +13,10 @@ import javax.swing.*;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+/**
+ * also not functional at the moment. Maybe can be get rid of completely, have to do more testing
+ */
+
 public class StartMenuSubScene  extends SubScene implements EventHandler<ActionEvent> {
 
     public StartMenuSubScene() {

@@ -7,7 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *
+ *This class saves the state of the board by using two dimensional arrays. It also handles writing into and retrieving
+ * from cells, as well as checking for neighbours of cells and checking if a given point is within the gameboard
  */
 
 public class BoardState {

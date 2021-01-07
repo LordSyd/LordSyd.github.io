@@ -13,6 +13,10 @@ import javax.swing.*;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+/**
+ * Simple layout class controlling the game over screen
+ */
+
 public class GameOverScreen  extends SubScene {
 
 

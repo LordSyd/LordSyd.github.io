@@ -19,29 +19,55 @@ import java.util.function.Consumer;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+/**
+ * One of the most important classes of this app and where most of the magic happens. Uses a mouse event handler attached
+ *  to each tile spawn to get if it was clicked. Logic what should happen on click is handled in here as well,
+ *  not best practice, but I am lacking a method to pass which button was clicked on to a separate component - so it will
+ *  remain like this for the moment
+ */
+
 public class TileFactory implements EntityFactory {
-    /*static ArrayList<Entity> shipTiles = new ArrayList<Entity>();
-    static ArrayList<Entity> hitTiles = new ArrayList<Entity>();*/
+
+    /**
+     * these arrays get filed with tiles on spawn, used to iterate over them on click to show change of state on screen
+     * by changing the tile's color. Uses 4 array lists to make check logic inside getBoardState() less complicated
+     */
     static ArrayList<Entity> player1shipTiles = new ArrayList<Entity>();
     static ArrayList<Entity> player1hitTiles = new ArrayList<Entity>();
     static ArrayList<Entity> player2shipTiles = new ArrayList<Entity>();
     static ArrayList<Entity> player2hitTiles = new ArrayList<Entity>();
 
 
-
+    /**
+     * method to streamline update between frames
+     */
     protected static void updateBoardState(){
+
         getBoardState("ship",1);
         getBoardState("hit",1);
         getBoardState("ship",2);
         getBoardState("hit",2);
     }
 
+    /**
+     * Important method that gets and updates the tiles, maybe should be called differently but I was scared messing
+     * around with names after the logic was hooked into everything. Maybe will clear up naming when time remains.
+     *
+     * the method takes in the board to check identifier "ship" or "hit", and the player ID 1 or 2 to signal which
+     * player should be checked. The rest is handled via switches and booleans
+     *
+     * @param boardToCheck board identifier as string
+     * @param playerID player ID as int
+     */
     protected static void getBoardState(String boardToCheck, int playerID){
+        /**
+         *
+         */
 
 
 
         Entity temp;
-        int tempId = 0;
+
 
 
         switch (boardToCheck){
@@ -121,7 +147,6 @@ public class TileFactory implements EntityFactory {
                             int hitState = BattleshipMain.player1.getStateOfHitCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y"));
 
                             if (hitState == 1) {
-                                //todo hook up ship color change on hit
                                 TileViewComponent black = new TileViewComponent(Color.BLACK);
 
                                 temp.removeComponent(TileViewComponent.class);
@@ -144,16 +169,16 @@ public class TileFactory implements EntityFactory {
     }
 
 
-
-
-
-
-
-
-
-
-
-
+    /**
+     *
+     *Main part of the entity factory. Adds components on spawn and adds an event handler that handles click events
+     *on the tiles. Logic is planed to be put into its seperate component class, ClickBehaviourComponent, but that
+     *is not implemented yet. Event handler checks what to do via different static booleans inside Main, maybe not
+     *best practice but way faster to implement for me. Cry me a river ;)
+     *
+     * @param data spawn data
+     * @return Entity
+     */
 
     @Spawns("tile")
     public Entity newTile(SpawnData data) {
@@ -161,19 +186,7 @@ public class TileFactory implements EntityFactory {
 
 
 
-
-
-
-
-
-        Ship ship = null;
-
-
-
-
         TileViewComponent original = new TileViewComponent(Color.GRAY);
-
-
 
         var tile = entityBuilder(data)
 
@@ -182,18 +195,7 @@ public class TileFactory implements EntityFactory {
                 .bbox(new HitBox(BoundingShape.box(30,30)))
                 .with(original)
                 .with(new ClickBehaviourComponent())
-
-
-
                 .build();
-
-
-
-
-
-
-
-
 
 
 
@@ -221,19 +223,13 @@ public class TileFactory implements EntityFactory {
                                     {
                                         System.out.println("Ship");
 
-
-
                                         getBoardState(tileType, 1);
-
-
-
 
                                         if (--BattleshipMain.player1ShipsToPlace == 0) {
 
                                             BattleshipMain.player1Turn = false;
 
 
-                                            //todo exchange test for menu with real player change submenu
                                             BattleshipMain.showTurnMenu();
                                         }
 
@@ -248,19 +244,13 @@ public class TileFactory implements EntityFactory {
                             {
                                 System.out.println("Ship");
 
-
-
                                 getBoardState(tileType,2);
-
-
-
 
                                 if (--BattleshipMain.player2ShipsToPlace == 0) {
 
                                     BattleshipMain.player1Turn = true;
 
 
-                                    //todo exchange test for menu with real player change submenu
                                     BattleshipMain.showTurnMenu();
                                 }
 
@@ -295,55 +285,14 @@ public class TileFactory implements EntityFactory {
                                 }
                             }
                         }
-
                     }
                 }
-
-
             }
-
-            //todo find fix for texture loading bug (backlog)
-           //spawn("ship", tile.getX(), tile.getY());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //todo complete logic for ship spawning
+           /*spawn("ship", tile.getX(), tile.getY());*/
         });
-
-
-
-
-
-
-
-
-
-
         return tile;
-
-
-
-
-
-
-
-
-
     }
-
 }
 
 

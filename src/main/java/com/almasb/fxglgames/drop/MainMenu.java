@@ -1,6 +1,7 @@
 package com.almasb.fxglgames.drop;
 
 
+
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 
@@ -16,6 +17,10 @@ import javafx.scene.text.Text;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+
+/**
+ * Not fully functioning at the moment, game uses default menu as of now. Problem with fireNewGame() method
+ */
 
 public class MainMenu extends FXGLMenu {
 
