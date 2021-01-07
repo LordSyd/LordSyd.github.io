@@ -17,8 +17,6 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 public class TileViewComponent extends ChildViewComponent {
 
-    //private TileValue value = TileValue.NONE;
-
 
     private Line line1 = new Line(0, 0, 0, 0);
     private Line line2 = new Line(75, 0, 75, 0);

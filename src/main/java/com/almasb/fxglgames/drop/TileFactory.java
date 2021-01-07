@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -38,6 +39,7 @@ public class TileFactory implements EntityFactory {
     protected static void getBoardState(String boardToCheck, int playerID){
 
 
+
         Entity temp;
         int tempId = 0;
 
@@ -49,13 +51,20 @@ public class TileFactory implements EntityFactory {
                         Iterator<Entity>  iterator = player1shipTiles.iterator();
                         for (int i = 0; i < player1shipTiles.size(); i++) {
                             temp = iterator.next();
+                            int tempShipState = BattleshipMain.player1.getStateOfShipsCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y"));
 
-                            if (BattleshipMain.player1.getStateOfShipsCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y")) == 1) {
+                            if (tempShipState == 1) {
                                 TileViewComponent blue = new TileViewComponent(Color.BLUE);
 
                                 temp.removeComponent(TileViewComponent.class);
 
                                 temp.addComponent(blue);
+                            } else if (tempShipState == 2) {
+                                TileViewComponent red = new TileViewComponent(Color.RED);
+
+                                temp.removeComponent(TileViewComponent.class);
+
+                                temp.addComponent(red);
                             }
                         }
                     }
@@ -63,12 +72,20 @@ public class TileFactory implements EntityFactory {
                         Iterator<Entity>  iterator = player2shipTiles.iterator();
                         for (int i = 0; i < player2shipTiles.size(); i++) {
                             temp = iterator.next();
-                            if (BattleshipMain.player2.getStateOfShipsCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y")) == 1) {
+                            int tempShipState = BattleshipMain.player2.getStateOfShipsCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y"));
+
+                            if (tempShipState == 1) {
                                 TileViewComponent blue = new TileViewComponent(Color.BLUE);
 
                                 temp.removeComponent(TileViewComponent.class);
 
                                 temp.addComponent(blue);
+                            } else if (tempShipState == 2) {
+                                TileViewComponent red = new TileViewComponent(Color.RED);
+
+                                temp.removeComponent(TileViewComponent.class);
+
+                                temp.addComponent(red);
                             }
                         }
                     }
@@ -104,6 +121,7 @@ public class TileFactory implements EntityFactory {
                             int hitState = BattleshipMain.player1.getStateOfHitCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y"));
 
                             if (hitState == 1) {
+                                //todo hook up ship color change on hit
                                 TileViewComponent black = new TileViewComponent(Color.BLACK);
 
                                 temp.removeComponent(TileViewComponent.class);
@@ -159,10 +177,17 @@ public class TileFactory implements EntityFactory {
 
         var tile = entityBuilder(data)
 
-                //.type(BattleshipMain.Type.TILE)
+                //todo get ClickBehaviourComponent hooked up correctly
+                //.onClick((Consumer<Entity>) e -> e.getComponent(ClickBehaviourComponent.class).onClick())
                 .bbox(new HitBox(BoundingShape.box(30,30)))
                 .with(original)
+                .with(new ClickBehaviourComponent())
+
+
+
                 .build();
+
+
 
 
 
@@ -246,26 +271,6 @@ public class TileFactory implements EntityFactory {
                     }else{
                         return;
                     }
-                    /*{
-
-                        if (
-                            BattleshipMain.player1.placeShip(new Ship(BattleshipMain.player1ShipsToPlace,
-                                    e.getButton() == MouseButton.PRIMARY),
-                            tile.getProperties().getValue("x"),  tile.getProperties().getValue("y"))){
-                            System.out.println("Ship");
-
-                            Entity temp;
-
-
-
-
-                            if (--BattleshipMain.player1ShipsToPlace == 0){
-
-                                BattleshipMain.showTurnMenu();
-                            }
-
-                         }
-                    }*/
                 }
                 case "hit" -> {
                     if (BattleshipMain.gameRunning) {

@@ -8,23 +8,23 @@ import javafx.event.EventType;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-public class ClickBehaviourComponent extends Component implements EventHandler<MouseEvent> {
-
-    Entity tile;
-
-    public ClickBehaviourComponent(Entity entity) {
-
-        this.tile = entity;
-
-    }
-
-    @Override
-    public void handle(MouseEvent event) {
-        System.out.println("clicked:  "+ tile.getProperties().getValue("x") + tile.getProperties().getValue("y"));
+public class ClickBehaviourComponent extends Component{
 
 
-        int playerId = tile.getProperties().getValue("Player");
-        String tileType = tile.getProperties().getValue("boardType");
+        
+        boolean primary;
+
+
+
+    public void onClick() {
+        System.out.println("clicked:  "+ entity.getProperties().getValue("x") + entity.getProperties().getValue("y"));
+
+
+        int playerId = entity.getProperties().getValue("Player");
+        String tileType = entity.getProperties().getValue("boardType");
+
+        System.out.println("clicked:  "+ entity.getProperties().getValue("x") + entity.getProperties().getValue("y"));
+
 
         switch (tileType) {
 
@@ -34,98 +34,86 @@ public class ClickBehaviourComponent extends Component implements EventHandler<M
                         case 1 -> {
                             {
 
-                                if (
+                                if (BattleshipMain.player1.placeShip(
+                                        new Ship(BattleshipMain.player1ShipsToPlace,
+                                                primary),
+                                        entity.getProperties().getValue("x"), entity.getProperties().getValue("y")))
+                                {
+                                    System.out.println("Ship");
 
-                                BattleshipMain.player1.placeShip(new Ship(BattleshipMain.player1ShipsToPlace,
-                                                event.getButton() == MouseButton.PRIMARY),
-                                        tile.getProperties().getValue("x"), tile.getProperties().getValue("y"))) {
+
+
+                                    TileFactory.getBoardState(tileType, 1);
+
+
+
+
+                                    if (--BattleshipMain.player1ShipsToPlace == 0) {
+
+                                        BattleshipMain.player1Turn = false;
+
+
+                                        //todo exchange test for menu with real player change submenu
+                                        BattleshipMain.showTurnMenu();
+                                    }
+
+                                }
+                            }
+                        }
+                        case 2 -> {
+                            if (BattleshipMain.player2.placeShip(
+                                    new Ship(BattleshipMain.player2ShipsToPlace,
+                                            primary),
+                                    entity.getProperties().getValue("x"), entity.getProperties().getValue("y")))
+                            {
                                 System.out.println("Ship");
 
 
 
-                                TileFactory.getBoardState(tileType, 1);
-
-                               /* Entity temp;
-
-                                Iterator<Entity>  iterator = shipTiles.iterator();
-                                for (int i = 0; i < shipTiles.size(); i++){
-                                    temp = iterator.next();
-                                    int tempId = temp.getProperties().getValue("Player");
+                                TileFactory.getBoardState(tileType,2);
 
 
 
-                                    if (
-                                            (BattleshipMain.player1.getStateOfShipsCell(temp.getProperties().getValue("x"),  temp.getProperties().getValue("y")) == 1) &&
-                                                    (tempId == 1)
-                                    ){
-                                        temp.getViewComponent().setOpacity(0.5);
-                                        int tempState = BattleshipMain.player1.getStateOfShipsCell(tile.getProperties().getValue("x"),  tile.getProperties().getValue("y"));
-                                        System.out.println("Temp:" + tempState);
-                                    }
-                                }*/
+
+                                if (--BattleshipMain.player2ShipsToPlace == 0) {
+
+                                    BattleshipMain.player1Turn = true;
 
 
-                                if (--BattleshipMain.player1ShipsToPlace == 0) {
-
-                                    BattleshipMain.gameRunning = true;
-
-
+                                    //todo exchange test for menu with real player change submenu
+                                    BattleshipMain.showTurnMenu();
                                 }
 
                             }
-                            }
-                        }
-                        case 2 -> {
+
                         }
                     }
                 }else{
                     return;
                 }
-                   /* {
-
-                        if (
-                            BattleshipMain.player1.placeShip(new Ship(BattleshipMain.player1ShipsToPlace,
-                                    e.getButton() == MouseButton.PRIMARY),
-                            tile.getProperties().getValue("x"),  tile.getProperties().getValue("y"))){
-                            System.out.println("Ship");
-
-                            Entity temp;
-
-                            Iterator<Entity>  iterator = shipTiles.iterator();
-                            for (int i = 0; i < shipTiles.size(); i++){
-                                temp = iterator.next();
-                                int tempId = temp.getProperties().getValue("Player");
-
-
-
-                                if (
-                                        (BattleshipMain.player1.getStateOfShipsCell(temp.getProperties().getValue("x"),  temp.getProperties().getValue("y")) == 1) &&
-                                                (tempId == 1)
-                                ){
-                                    temp.getViewComponent().setOpacity(0.5);
-                                    int tempState = BattleshipMain.player1.getStateOfShipsCell(tile.getProperties().getValue("x"),  tile.getProperties().getValue("y"));
-                                    System.out.println("Temp:" + tempState);
-                                }
-                            }
-
-
-                            if (--BattleshipMain.player1ShipsToPlace == 0){
-
-                                BattleshipMain.gameRunning = true;
-                            }
-
-                         }
-                    }*/
             }
             case "hit" -> {
                 if (BattleshipMain.gameRunning) {
 
                     switch (playerId) {
                         case 1 -> {
+                            TileFactory.updateBoardState();
+                            if (BattleshipMain.betweenTurnMenuActive =
+                                    BattleshipMain.player2.shoot(entity.getProperties().getValue("x"), entity.getProperties().getValue("y"))) {
+                                BattleshipMain.player1Turn = false;
+                            }
 
-                            BattleshipMain.player2.shoot(tile.getProperties().getValue("x"), tile.getProperties().getValue("y"));
                         }
-                        case 2 -> BattleshipMain.player1.shoot(tile.getProperties().getValue("x"), tile.getProperties().getValue("y"));
+
+
+                        case 2 -> {
+                            TileFactory.getBoardState(tileType, 2);
+
+                            if (BattleshipMain.betweenTurnMenuActive =
+                                    BattleshipMain.player1.shoot(entity.getProperties().getValue("x"), entity.getProperties().getValue("y"))) {
+                                BattleshipMain.player1Turn = true;
+                            }
+                        }
                     }
 
                 }
@@ -137,7 +125,7 @@ public class ClickBehaviourComponent extends Component implements EventHandler<M
         //todo find fix for texture loading bug (backlog)
         //spawn("ship", tile.getX(), tile.getY());
 
-        /*getBoardState(tileType);*/
+
 
 
 
@@ -154,7 +142,6 @@ public class ClickBehaviourComponent extends Component implements EventHandler<M
 
 
     }
-
 
 
 

@@ -10,7 +10,7 @@ public class Player {
     private BoardState shots = new BoardState();
 
     //todo change player health to correct logic after testing is finished
-    private int health = 2; //numbers of tiles per ship type
+    private int health = 5+4+3+2+1; //numbers of tiles per ship type
 
     public Player() {
     }
@@ -32,6 +32,7 @@ public class Player {
         }else{
             if (ships.getStateOfCell(x,y) == 1){
                 shots.setStateOfCell(x,y, 2);
+                ships.setStateOfCell(x,y, 2);
                 hit();
                 return false;
             }else{

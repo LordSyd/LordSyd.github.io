@@ -23,10 +23,6 @@ public class BattleshipMain extends GameApplication {
 
     int deadPlayer = 0;
 
-    public enum Type {
-        DROPLET,TILE
-    }
-
 
 
     @Override
@@ -56,18 +52,6 @@ public class BattleshipMain extends GameApplication {
 
 
     }
-
-    /*public Entity[][] shipBoard = new Entity[10][10];
-
-    public Entity[][] hitBoard = new Entity[10][10];
-
-    public Entity[][] getShipBoard() {
-        return shipBoard;
-    }
-
-    public Entity[][] getHitBoard() {
-        return hitBoard;
-    }*/
 
 
 
@@ -265,8 +249,7 @@ public class BattleshipMain extends GameApplication {
     }
 
 
-   /* Scene scene2;
-    Stage window;*/
+
 
     static protected void showStartMenu(){
         getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
@@ -299,10 +282,7 @@ public class BattleshipMain extends GameApplication {
     static protected void closeTurnMenu(){
         betweenTurnMenuActive = false;
         clearTileArrays();
-
-        /*if (player1Turn){
-            player1Turn = false;
-        }*/
+        
 
         getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
         getSceneService().popSubScene();
