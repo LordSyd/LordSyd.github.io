@@ -9,6 +9,11 @@ import com.almasb.fxgl.entity.Spawns;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 
+/**
+ * This class is not functional at the moment. There seems to be a bug inside the textureloader of FXGL that is out of
+ * my ability to fix
+ */
+
 public class ShipFactory implements EntityFactory {
 
 

@@ -18,8 +18,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 public class TileViewComponent extends ChildViewComponent {
 
 
-    private Line line1 = new Line(0, 0, 0, 0);
-    private Line line2 = new Line(75, 0, 75, 0);
+
 
     public TileViewComponent(Color color) {
 
@@ -30,17 +29,7 @@ public class TileViewComponent extends ChildViewComponent {
         bg2.setStroke(Color.BLACK);
 
 
-
-
-
-
-        line1.setStrokeWidth(3);
-        line2.setStrokeWidth(3);
-
-        line1.setVisible(false);
-        line2.setVisible(false);
-
-        getViewRoot().getChildren().addAll(new StackPane(bg, bg2, line1, line2));
+        getViewRoot().getChildren().addAll(new StackPane(bg, bg2));
     }
 
 

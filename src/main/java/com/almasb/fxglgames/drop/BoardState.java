@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ *
+ */
+
 public class BoardState {
     private int[][] State = new int[10][10];
 

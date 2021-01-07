@@ -12,6 +12,11 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 //todo fix placement of boards
 
 public class BattleshipMain extends GameApplication {
+    /**
+     * Because this App was written using an existing javaFX Battleship implementation by Almas Baimagambetov as
+     * reference, some classes and methods may either be redundant or might me exchanged for simple variables. In the
+     * sake of getting a finished App done this optimisation is viewed as optional, as long as the overall game works.
+     */
 
     static Player player1 = new Player();
     static Player player2 = new Player();
@@ -58,107 +63,22 @@ public class BattleshipMain extends GameApplication {
     @Override
     protected void initGame() {
 
-
+        /**
+         * adds Entity Factories and calls spawn method for boards
+         */
 
         getGameWorld().addEntityFactory(new TileFactory());
-        getGameWorld().addEntityFactory(new ShipFactory());
 
+        //todo find workaround for engine bug with texture assignment
+        //getGameWorld().addEntityFactory(new ShipFactory());
 
-
-        //Spawn  hitBoard
+        //Spawn  hitBoard player 1
         spawnHitBoard(1);
 
 
-        //Spawn shipBoard
+        //Spawn shipBoard player1
 
         spawnShipBoard(1);
-
-
-
-
-       /* BorderPane root = new BorderPane();
-        root.setPrefSize(600, 800);
-        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));*/
-
-        /*enemyBoard = new Board(true, event -> {
-            if (!running)
-                return;
-
-            Cell cell = (Cell) event.getSource();
-            if (cell.wasShot){
-                System.out.println("already shot");
-                return;}
-
-
-
-
-
-            enemyTurn = !cell.shoot();
-
-
-
-            if (enemyBoard.ships == 0) {
-                System.out.println("YOU WIN");
-                System.exit(0);
-            }
-
-            if (enemyTurn)
-                enemyMove();
-        });*/
-
-        /*playerBoard = new Board(false, event -> {
-            if (running)
-                return;
-
-            Cell cell = (Cell) event.getSource();
-            if (player1.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
-
-            }
-
-
-
-            System.out.println(player1.getStateOfShipsCell(cell.x, cell.y));
-            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
-                if (--shipsToPlace == 0) {
-                    startGame();
-                }
-            }*/
-
-
-          /*  System.out.println(cell.localToScene(cell.getLayoutBounds()).getMinX());
-
-
-
-
-            Entity Droplet = spawnDroplet(cell.localToScene(cell.getLayoutBounds()).getMinX(), cell.localToScene(cell.getLayoutBounds()).getMinY());
-
-            getGameWorld().addEntity(Droplet);
-
-
-            //getGameWorld().getEntitiesByType(Type.DROPLET).forEach(droplet -> droplet.);
-
-
-
-        });*/
-
-       /* VBox vbox = new VBox(50, enemyBoard, playerBoard);
-        vbox.setAlignment(Pos.CENTER);*/
-
-
-
-
-
-
-
-
-        /*root.setCenter(vbox);*/
-
-
-
-
-
-
-
 
 
     }
@@ -249,7 +169,9 @@ public class BattleshipMain extends GameApplication {
     }
 
 
-
+    /**
+     * Some methods in here are only for future proofing and not in use at the moment
+     */
 
     static protected void showStartMenu(){
         getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
@@ -257,6 +179,9 @@ public class BattleshipMain extends GameApplication {
     }
 
     static protected void showTurnMenu(){
+        /**
+         * removes all spawned entities and checks turn boolean for which scene to push
+         */
         getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
         if (player1Turn){
             getSceneService().pushSubScene(new NewTurnSubScene(1, gameRunning));
@@ -273,6 +198,9 @@ public class BattleshipMain extends GameApplication {
     }
 
     static protected void clearTileArrays(){
+        /**
+         * used to clear arraylists holding the tiles after each round
+         */
         TileFactory.player1shipTiles.clear();
         TileFactory.player2shipTiles.clear();
         TileFactory.player1hitTiles.clear();
@@ -398,215 +326,6 @@ public class BattleshipMain extends GameApplication {
         }
     }
 
-
-
-
-    /*private boolean running = false;
-    private Board enemyBoard, playerBoard;
-
-    private int shipsToPlace = 5;
-
-    private boolean enemyTurn = false;
-
-    private Random random = new Random();
-
-    private Parent createContent() {
-        BorderPane root = new BorderPane();
-        root.setPrefSize(600, 800);
-
-        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
-
-        enemyBoard = new Board(true, event -> {
-            if (!running)
-                return;
-
-            Cell cell = (Cell) event.getSource();
-            if (cell.wasShot){
-                System.out.println("already shot");
-                return;}
-
-
-
-
-
-            enemyTurn = !cell.shoot();
-
-
-
-            if (enemyBoard.ships == 0) {
-                System.out.println("YOU WIN");
-                System.exit(0);
-            }
-
-            if (enemyTurn)
-                enemyMove();
-        });
-
-        playerBoard = new Board(false, event -> {
-            if (running)
-                return;
-
-            Cell cell = (Cell) event.getSource();
-            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
-                if (--shipsToPlace == 0) {
-                    startGame();
-                }
-            }
-
-            spawnDroplet(cell.x, cell.y);
-        });
-
-        VBox vbox = new VBox(50, enemyBoard, playerBoard);
-        vbox.setAlignment(Pos.CENTER);
-
-        root.setCenter(vbox);
-
-        return root;
-    }*/
-
-   /* private void enemyMove() {
-        while (enemyTurn) {
-            int x = random.nextInt(10);
-            int y = random.nextInt(10);
-
-            Cell cell = playerBoard.getCell(x, y);
-            if (cell.wasShot)
-                continue;
-
-            enemyTurn = cell.shoot();
-
-            if (playerBoard.ships == 0) {
-                System.out.println("YOU LOSE");
-                System.exit(0);
-            }
-        }
-    }*/
-
-    /*private void startGame() {
-        // place enemy ships
-        int type = 5;
-
-        while (type > 0) {
-            int x = random.nextInt(10);
-            int y = random.nextInt(10);
-
-            if (enemyBoard.placeShip(new Ship(type, Math.random() < 0.5), x, y)) {
-                type--;
-            }
-        }
-
-        running = true;
-    }*/
-
-    /*static Entity spawnDroplet(double x, double y) {
-        
-        //String path = this.getClass().getResource("/assets/textures/ship_1x5.png").toExternalForm();
-
-
-       Entity Droplet = FXGL.entityBuilder()
-                .type(BattleshipMain.Type.DROPLET)
-                .at(x,y)
-                .viewWithBBox("assets/textures/ship_1x5.png")
-                .build();
-
-       return Droplet;
-    }*/
-
-
-
-
-
-
-
-
-
-
-    /*public void start(Stage primaryStage) throws Exception {
-        window = primaryStage;
-
-        BorderPane root = new BorderPane();
-        BorderPane root2 = new BorderPane();
-        root.setPrefSize(600, 800);
-        root2.setPrefSize(600, 800);
-
-        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
-
-        VBox layoutTest = new VBox(20);
-        Scene scene2 = new Scene(root2);
-
-        enemyBoard = new Board(true, event -> {
-            if (!running)
-                return;
-
-            Cell cell = (Cell) event.getSource();
-            System.out.println(cell.x + ": " + cell.y);
-            if (cell.wasShot){
-                System.out.println("already shot");
-                return;}
-
-
-
-
-
-            enemyTurn = !cell.shoot();
-
-
-
-            if (enemyBoard.ships == 0) {
-                System.out.println("YOU WIN");
-                System.exit(0);
-            }
-
-            if (enemyTurn) {
-                enemyMove();
-                VBox vbox2 = new VBox(50, playerBoard, enemyBoard);
-                vbox2.setAlignment(Pos.CENTER);
-                root2.setCenter(vbox2);
-                window.setScene(scene2);
-            }
-        });
-
-        playerBoard = new Board(false, event -> {
-            if (running)
-                return;
-
-            Cell cell = (Cell) event.getSource();
-            System.out.println(cell.x + ": " + cell.y);
-            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
-                if (--shipsToPlace == 0) {
-                    startGame();
-                }
-            }
-
-            spawnDroplet(cell.x, cell.y);
-        });
-
-        VBox vbox = new VBox(50, enemyBoard, playerBoard);
-        //
-        vbox.setAlignment(Pos.CENTER);
-        //
-
-        root.setCenter(vbox);
-        //root2.setCenter(vbox2);
-
-
-        Scene scene = new Scene(root);
-        window.setTitle("Battleship");
-        window.setScene(scene);
-        window.setResizable(false);
-
-
-
-
-
-        window.show();
-
-
-
-
-
-
-    }*/
 
     public static void main(String[] args) {
         launch(args);
