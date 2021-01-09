@@ -12,19 +12,19 @@ import javafx.scene.image.ImageView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.net.URI;
 
-import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 
 /**
- * This class is not functional at the moment. There seems to be a bug inside the textureloader of FXGL that is out of
- * my ability to fix
+ * This class is not functional at the moment. Logic for spawning needs to be written and hooked up
  */
 
 public class ShipFactory implements EntityFactory {
 
 
 
+    //todo implement logic to check which ship should be spawned in what orientation when
+
+    //todo fix entity despawning and respawning behaviour
 
 
     @Spawns("ship")
@@ -39,7 +39,7 @@ public class ShipFactory implements EntityFactory {
             case 0 ->  test = new File("src/main/assets/textures/ship_1x1.png");
         }
 
-        //File test = new File("src/main/assets/textures/ship_1x5.png");
+
 
 
 
@@ -68,6 +68,10 @@ public class ShipFactory implements EntityFactory {
                 //.type(BattleshipMain.Type.TILE)
                 .viewWithBBox(view)
                 .build();
+
+
+
+
 
 
 

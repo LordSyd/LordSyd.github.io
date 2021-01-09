@@ -9,7 +9,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
- * This class is not functional at the moment. It lacks a way to pass the mouse click to it, so this logic is handled
+ * This class is not functional. It lacks a way to pass the mouse button clicked to it, so this logic is handled
  * inside the TileFactory class at the moment
  */
 

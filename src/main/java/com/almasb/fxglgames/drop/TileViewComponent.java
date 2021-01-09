@@ -14,6 +14,10 @@ import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+/**
+ * This governs the look of each tile. The color gets set on construction, by passing Color.color identifier on to the
+ * constructor
+ */
 
 public class TileViewComponent extends ChildViewComponent {
 

@@ -1,6 +1,10 @@
 package com.almasb.fxglgames.drop;
 
-
+/**
+ * This class represents the players. It has two arrays for saving the ship positions and where the player has shot,
+ * if it hit anything and so on. It also has health that gets subtracted from on hit() and it checks if ships can be
+ * placed. Also it has a method to return if the player isDead()
+ */
 
 
 public class Player {
@@ -24,9 +28,6 @@ public class Player {
     }
 
     public boolean shoot(int x, int y){
-        /**
-         * returns
-         */
         if (shots.getStateOfCell(x,y) != 0){
             return false;
         }else{
