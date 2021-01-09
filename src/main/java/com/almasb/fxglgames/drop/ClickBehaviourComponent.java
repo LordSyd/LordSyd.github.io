@@ -9,27 +9,37 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
- * This class is not functional. It lacks a way to pass the mouse button clicked to it, so this logic is handled
- * inside the TileFactory class at the moment
+ * Class governs behavior on click - was handled by TileFactory before. Logic is basically the same
  */
 
 public class ClickBehaviourComponent extends Component{
 
 
         
-        boolean primary;
+    boolean primary = true;
+
+    /**
+     * Called when secondary mouse button was clicked - only changes the boolean and then calls onPrimaryClick()
+     */
+
+    public void onSecondaryClick() {
+
+        primary = false;
+        onPrimaryClick();
+
+    }
+
+    /**
+     * Same as it was in Tilefactory, just has a boolean instead of a check for a mouse button
+     */
 
 
-
-    public void onClick() {
+    public void onPrimaryClick() {
         System.out.println("clicked:  "+ entity.getProperties().getValue("x") + entity.getProperties().getValue("y"));
 
 
         int playerId = entity.getProperties().getValue("Player");
         String tileType = entity.getProperties().getValue("boardType");
-
-        System.out.println("clicked:  "+ entity.getProperties().getValue("x") + entity.getProperties().getValue("y"));
-
 
         switch (tileType) {
 

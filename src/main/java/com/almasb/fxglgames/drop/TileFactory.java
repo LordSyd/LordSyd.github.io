@@ -14,8 +14,6 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Consumer;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -165,6 +163,7 @@ public class TileFactory implements EntityFactory {
         }
     }
 
+    //Todo update comment
 
     /**
      *
@@ -187,8 +186,6 @@ public class TileFactory implements EntityFactory {
 
         var tile = entityBuilder(data)
 
-                //todo get ClickBehaviourComponent hooked up correctly
-                //.onClick((Consumer<Entity>) e -> e.getComponent(ClickBehaviourComponent.class).onClick())
                 .bbox(new HitBox(BoundingShape.box(30,30)))
                 .with(original)
                 .with(new ClickBehaviourComponent())
@@ -198,93 +195,12 @@ public class TileFactory implements EntityFactory {
 
         tile.getViewComponent().addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 
-
-            System.out.println("clicked:  "+ tile.getProperties().getValue("x") + tile.getProperties().getValue("y"));
-            
-
-            int playerId = tile.getProperties().getValue("Player");
-            String tileType = tile.getProperties().getValue("boardType");
-            
-            switch (tileType) {
-
-                case "ship" -> {
-                    if (!BattleshipMain.gameRunning) {
-                        switch (playerId) {
-                            case 1 -> {
-                                {
-
-                                    if (BattleshipMain.player1.placeShip(
-                                            new Ship(BattleshipMain.player1ShipsToPlace,
-                                            e.getButton() == MouseButton.PRIMARY),
-                                            tile.getProperties().getValue("x"), tile.getProperties().getValue("y")))
-                                    {
-                                        System.out.println("Ship");
-
-                                        getBoardState(tileType, 1);
-
-                                        if (--BattleshipMain.player1ShipsToPlace == 0) {
-
-                                            BattleshipMain.player1Turn = false;
-
-
-                                            BattleshipMain.showTurnMenu();
-                                        }
-
-                                    }
-                                }
-                            }
-                            case 2 -> {
-                                if (BattleshipMain.player2.placeShip(
-                                    new Ship(BattleshipMain.player2ShipsToPlace,
-                                            e.getButton() == MouseButton.PRIMARY),
-                                    tile.getProperties().getValue("x"), tile.getProperties().getValue("y")))
-                            {
-                                System.out.println("Ship");
-
-                                getBoardState(tileType,2);
-
-                                if (--BattleshipMain.player2ShipsToPlace == 0) {
-
-                                    BattleshipMain.player1Turn = true;
-
-
-                                    BattleshipMain.showTurnMenu();
-                                }
-
-                            }
-
-                            }
-                        }
-                    }else{
-                        return;
-                    }
-                }
-                case "hit" -> {
-                    if (BattleshipMain.gameRunning) {
-
-                        switch (playerId) {
-                            case 1 -> {
-                                updateBoardState();
-                                if (BattleshipMain.betweenTurnMenuActive =
-                                        BattleshipMain.player2.shoot(tile.getProperties().getValue("x"), tile.getProperties().getValue("y"))) {
-                                    BattleshipMain.player1Turn = false;
-                                }
-
-                            }
-
-
-                            case 2 -> {
-                                getBoardState(tileType, 2);
-
-                                if (BattleshipMain.betweenTurnMenuActive =
-                                        BattleshipMain.player1.shoot(tile.getProperties().getValue("x"), tile.getProperties().getValue("y"))) {
-                                    BattleshipMain.player1Turn = true;
-                                }
-                            }
-                        }
-                    }
-                }
+            if (e.getButton() == MouseButton.SECONDARY){
+                tile.getComponent(ClickBehaviourComponent.class).onSecondaryClick();
+            }else if (e.getButton() == MouseButton.PRIMARY) {
+                tile.getComponent(ClickBehaviourComponent.class).onPrimaryClick();
             }
+
             //todo complete logic for ship spawning
            /*spawn("ship", tile.getX(), tile.getY());*/
         });
