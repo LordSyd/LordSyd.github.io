@@ -6,6 +6,13 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.net.URI;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 
@@ -21,42 +28,48 @@ public class ShipFactory implements EntityFactory {
 
 
     @Spawns("ship")
-    public Entity newShip(SpawnData data) {
+    public Entity newShip(SpawnData data) throws FileNotFoundException {
+        File test = new File("src/main/assets/textures/ship_1x1.png");
+
+        switch ( BattleshipMain.player1ShipsToPlace ) {
+            case 4 ->  test = new File("src/main/assets/textures/ship_1x5.png");
+            case 3 ->  test = new File("src/main/assets/textures/ship_1x4.png");
+            case 2 ->  test = new File("src/main/assets/textures/ship_1x3.png");
+            case 1 ->  test = new File("src/main/assets/textures/ship_1x2.png");
+            case 0 ->  test = new File("src/main/assets/textures/ship_1x1.png");
+        }
+
+        //File test = new File("src/main/assets/textures/ship_1x5.png");
+
+
+
+        String str = test.getAbsolutePath();
+
+
+
+
+
+        System.out.println(test.getAbsolutePath());
+        System.out.println(str);
+
+
+
+        FileInputStream input = new FileInputStream(str);
+
+
+
+        Image img = new Image(input);
+
+        ImageView view = new ImageView(img);
 
 
         var ship = FXGL.entityBuilder(data)
 
                 //.type(BattleshipMain.Type.TILE)
-                .viewWithBBox("assets/textures/ship_1x5.png")
+                .viewWithBBox(view)
                 .build();
 
 
-
-
-
-        /*tile.getViewComponent().addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-            System.out.println("clicked:  "+ tile.getProperties().getValue("x") + tile.getProperties().getValue("y"));
-
-            Entity spawnDroplet(double x, double y) {
-
-                //String path = this.getClass().getResource("/assets/textures/ship_1x5.png").toExternalForm();
-
-
-                Entity Droplet = FXGL.entityBuilder()
-                        .type(BattleshipMain.Type.DROPLET)
-                        .at(x,y)
-                        .viewWithBBox("ship_1x5.png")
-                        .build();
-
-
-            }
-
-
-
-
-
-
-        });*/
 
         return ship;
 

@@ -70,7 +70,7 @@ public class BattleshipMain extends GameApplication {
         getGameWorld().addEntityFactory(new TileFactory());
 
         //todo find workaround for engine bug with texture assignment
-        //getGameWorld().addEntityFactory(new ShipFactory());
+        getGameWorld().addEntityFactory(new ShipFactory());
 
         //Spawn  hitBoard player 1
         spawnHitBoard(1);

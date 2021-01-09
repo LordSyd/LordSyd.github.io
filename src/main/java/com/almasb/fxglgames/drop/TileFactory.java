@@ -121,7 +121,7 @@ public class TileFactory implements EntityFactory {
                             int hitState = BattleshipMain.player1.getStateOfHitCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y"));
 
                             if (hitState == 1) {
-                                //todo hook up ship color change on hit
+
                                 TileViewComponent black = new TileViewComponent(Color.BLACK);
 
                                 temp.removeComponent(TileViewComponent.class);
@@ -233,7 +233,7 @@ public class TileFactory implements EntityFactory {
                                             BattleshipMain.player1Turn = false;
 
 
-                                            //todo exchange test for menu with real player change submenu
+
                                             BattleshipMain.showTurnMenu();
                                         }
 
@@ -260,7 +260,7 @@ public class TileFactory implements EntityFactory {
                                     BattleshipMain.player1Turn = true;
 
 
-                                    //todo exchange test for menu with real player change submenu
+
                                     BattleshipMain.showTurnMenu();
                                 }
 
@@ -303,7 +303,7 @@ public class TileFactory implements EntityFactory {
             }
 
             //todo find fix for texture loading bug (backlog)
-           //spawn("ship", tile.getX(), tile.getY());
+           /*spawn("ship", tile.getX(), tile.getY());*/
 
 
 
