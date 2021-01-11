@@ -19,9 +19,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 
 /**
  * One of the most important classes of this app and where most of the magic happens. Uses a mouse event handler attached
- *  to each tile spawn to get if it was clicked. Logic what should happen on click is handled in here as well,
- *  not best practice, but I am lacking a method to pass which button was clicked on to a separate component - so it will
- *  remain like this for the moment
+ *  to each tile spawn to get if it was clicked. This event handler then calls the corresponding method of the attached ClickBehaviourComponent.
  */
 
 public class TileFactory implements EntityFactory {
@@ -168,9 +166,7 @@ public class TileFactory implements EntityFactory {
     /**
      *
      *Main part of the entity factory. Adds components on spawn and adds an event handler that handles click events
-     *on the tiles. Logic is planed to be put into its seperate component class, ClickBehaviourComponent, but that
-     *is not implemented yet. Event handler checks what to do via different static booleans inside Main, maybe not
-     *best practice but way faster to implement for me. Cry me a river ;)
+     *on the tiles. Event handler calls method in ClickBehaviourComponent depending on mouse button clicked.
      *
      * @param data spawn data
      * @return Entity
