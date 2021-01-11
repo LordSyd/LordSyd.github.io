@@ -14,15 +14,7 @@ import java.util.List;
 public class BoardState {
     private int[][] State = new int[10][10];
 
-    public BoardState() {
-        for (int[] row:
-             State) {
-            for (int cell:
-                 row) {
-                cell = 0;
-            }
-        }
-    }
+    public BoardState() {}
 
     public void setStateOfCell(int x, int y, int newState) {
         State[x][y] = newState;

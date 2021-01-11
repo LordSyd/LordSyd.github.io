@@ -6,8 +6,6 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.entity.Entity;
 
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import static com.almasb.fxgl.dsl.FXGL.*;
 //todo fix placement of boards
 
@@ -30,7 +28,7 @@ public class BattleshipMain extends GameApplication {
     static boolean player1Turn = true;
     static boolean betweenTurnMenuActive = false;
 
-    int deadPlayer = 0;
+    private int deadPlayer = 0;
 
 
 
@@ -197,7 +195,6 @@ public class BattleshipMain extends GameApplication {
         }else{
             getSceneService().pushSubScene(new NewTurnSubScene(2, gameRunning));
         }
-
     }
 
     protected void showGameOverMenu(){
@@ -220,7 +217,6 @@ public class BattleshipMain extends GameApplication {
     static protected void closeTurnMenu(){
         betweenTurnMenuActive = false;
         clearTileArrays();
-        
 
         getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
         getSceneService().popSubScene();
@@ -232,17 +228,10 @@ public class BattleshipMain extends GameApplication {
             spawnHitBoard(2);
             spawnShipBoard(2);
         }
-
-
-
         if (player1ShipsToPlace == 0 && player2ShipsToPlace ==0){
 
             gameRunning = true;
         }
-
-
-
-
     }
 
 
@@ -252,12 +241,11 @@ public class BattleshipMain extends GameApplication {
 
         spawnHitBoard(1);
         spawnShipBoard(1);
-
     }
 
 
     /**
-     * method spawning the boards for placin ships
+     * method spawning the boards for placing ships
      * @param player
      */
     private static void spawnShipBoard(int player){
@@ -271,7 +259,6 @@ public class BattleshipMain extends GameApplication {
                 startX = 68;
                 startY = 420;
             }
-
             case 2 -> {
                 startX = 600;
                 startY = 420;
@@ -284,20 +271,17 @@ public class BattleshipMain extends GameApplication {
             for (int x = 0; x < 10; x++) {
 
                 Entity tile = spawn("tile", x * 30 + startX, y * 30 + startY);
-
                 tile.setProperty("x", x);
                 tile.setProperty("y", y);
                 tile.setProperty("boardType", "ship");
                 tile.setProperty("Player", player);
+
                 if (player == 1){
                     TileFactory.player1shipTiles.add(tile);
                 }else{
                     TileFactory.player2shipTiles.add(tile);
                 }
-
-
             }
-
         }
     }
 

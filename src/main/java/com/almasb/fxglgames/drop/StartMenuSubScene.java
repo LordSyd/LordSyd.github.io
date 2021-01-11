@@ -9,8 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 
-import javax.swing.*;
-
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 /**
@@ -34,13 +32,9 @@ public class StartMenuSubScene  extends SubScene implements EventHandler<ActionE
         button.setTranslateX(100);
         button.setTranslateY(400);
 
-
-
         var stackPane = new StackPane(bg, text);
         getContentRoot().getChildren().add(stackPane);
         getContentRoot().getChildren().add(button);
-
-
 
     }
 
@@ -50,7 +44,7 @@ public class StartMenuSubScene  extends SubScene implements EventHandler<ActionE
         System.out.println("pressed");
 
         BattleshipMain.closeStartMenu();
-        TileFactory.getBoardState("ship",1);
-        TileFactory.getBoardState("ship",2);
+        TileFactory.getBoardStateColors("ship",1);
+        TileFactory.getBoardStateColors("ship",2);
     }
 }

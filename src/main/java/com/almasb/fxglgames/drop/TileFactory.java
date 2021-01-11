@@ -39,15 +39,14 @@ public class TileFactory implements EntityFactory {
      */
     protected static void updateBoardState(){
 
-        getBoardState("ship",1);
-        getBoardState("hit",1);
-        getBoardState("ship",2);
-        getBoardState("hit",2);
+        getBoardStateColors("ship",1);
+        getBoardStateColors("hit",1);
+        getBoardStateColors("ship",2);
+        getBoardStateColors("hit",2);
     }
 
     /**
-     * Important method that gets and updates the tiles, maybe should be called differently but I was scared messing
-     * around with names after the logic was hooked into everything. Maybe will clear up naming when time remains.
+     * Important method that gets and updates the color of the tiles.
      *
      * the method takes in the board to check identifier "ship" or "hit", and the player ID 1 or 2 to signal which
      * player should be checked. The rest is handled via switches and booleans
@@ -55,13 +54,9 @@ public class TileFactory implements EntityFactory {
      * @param boardToCheck board identifier as string
      * @param playerID player ID as int
      */
-    protected static void getBoardState(String boardToCheck, int playerID){
-
-
+    protected static void getBoardStateColors(String boardToCheck, int playerID){
 
         Entity temp;
-
-
 
         switch (boardToCheck){
             case "ship" -> {
@@ -73,17 +68,11 @@ public class TileFactory implements EntityFactory {
                             int tempShipState = BattleshipMain.player1.getStateOfShipsCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y"));
 
                             if (tempShipState == 1) {
-                                TileViewComponent blue = new TileViewComponent(Color.BLUE);
+                                //Todo implement new set color method everywhere
+                                temp.getComponent(TileViewComponent.class).setColor(Color.BLUE);
 
-                                temp.removeComponent(TileViewComponent.class);
-
-                                temp.addComponent(blue);
                             } else if (tempShipState == 2) {
-                                TileViewComponent red = new TileViewComponent(Color.RED);
-
-                                temp.removeComponent(TileViewComponent.class);
-
-                                temp.addComponent(red);
+                                temp.getComponent(TileViewComponent.class).setColor(Color.RED);
                             }
                         }
                     }
@@ -94,17 +83,11 @@ public class TileFactory implements EntityFactory {
                             int tempShipState = BattleshipMain.player2.getStateOfShipsCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y"));
 
                             if (tempShipState == 1) {
-                                TileViewComponent blue = new TileViewComponent(Color.BLUE);
+                                temp.getComponent(TileViewComponent.class).setColor(Color.BLUE);
 
-                                temp.removeComponent(TileViewComponent.class);
-
-                                temp.addComponent(blue);
                             } else if (tempShipState == 2) {
-                                TileViewComponent red = new TileViewComponent(Color.RED);
+                                temp.getComponent(TileViewComponent.class).setColor(Color.RED);
 
-                                temp.removeComponent(TileViewComponent.class);
-
-                                temp.addComponent(red);
                             }
                         }
                     }
@@ -119,17 +102,11 @@ public class TileFactory implements EntityFactory {
                             int hitState = BattleshipMain.player2.getStateOfHitCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y"));
 
                             if (hitState == 1) {
-                                TileViewComponent black = new TileViewComponent(Color.BLACK);
+                                temp.getComponent(TileViewComponent.class).setColor(Color.BLACK);
 
-                                temp.removeComponent(TileViewComponent.class);
-
-                                temp.addComponent(black);
                             }else if (hitState == 2){
-                                TileViewComponent red = new TileViewComponent(Color.RED);
+                                temp.getComponent(TileViewComponent.class).setColor(Color.RED);
 
-                                temp.removeComponent(TileViewComponent.class);
-
-                                temp.addComponent(red);
                             }
                         }
                     }
@@ -140,20 +117,12 @@ public class TileFactory implements EntityFactory {
                             int hitState = BattleshipMain.player1.getStateOfHitCell(temp.getProperties().getValue("x"), temp.getProperties().getValue("y"));
 
                             if (hitState == 1) {
-                                TileViewComponent black = new TileViewComponent(Color.BLACK);
+                                temp.getComponent(TileViewComponent.class).setColor(Color.BLACK);
 
-                                temp.removeComponent(TileViewComponent.class);
-
-                                temp.addComponent(black);
                             }else if (hitState == 2) {
-                                TileViewComponent red = new TileViewComponent(Color.RED);
+                                temp.getComponent(TileViewComponent.class).setColor(Color.RED);
 
-                                temp.removeComponent(TileViewComponent.class);
-
-                                temp.addComponent(red);
                             }
-
-
                         }
                     }
                 }

@@ -34,6 +34,7 @@ public class NewTurnSubScene  extends SubScene implements EventHandler<ActionEve
                 case 2 -> nextPlayerText = "Player Two - Place your ships ";
             }
         }else{
+            //Todo implement correct text
 
         }
 
@@ -58,8 +59,6 @@ public class NewTurnSubScene  extends SubScene implements EventHandler<ActionEve
         var stackPane = new StackPane(bg, text);
         getContentRoot().getChildren().add(stackPane);
         getContentRoot().getChildren().add(button);
-
-
 
     }
 

@@ -10,8 +10,8 @@ package com.almasb.fxglgames.drop;
 public class Player {
 
 
-    private BoardState ships = new BoardState();
-    private BoardState shots = new BoardState();
+    private final BoardState ships = new BoardState();
+    private final BoardState shots = new BoardState();
 
 
     private int health = 5+4+3+2+1; //numbers of tiles per ship type

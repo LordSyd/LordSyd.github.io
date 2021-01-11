@@ -22,10 +22,8 @@ public class GameOverScreen  extends SubScene {
 
     public GameOverScreen(int deadPlayer) {
 
-
         String deadPlayerText = "I should not appear";
         var text = getUIFactoryService().newText(deadPlayerText , Color.GOLD, 32);
-
 
             switch (deadPlayer){
                 case 1 -> deadPlayerText = "Player One Lost!";
@@ -42,8 +40,6 @@ public class GameOverScreen  extends SubScene {
         bg.setArcHeight(50);
         bg.setStroke(Color.WHITE);
         bg.setStrokeWidth(10);
-
-
 
 
         var stackPane = new StackPane(bg, text);
