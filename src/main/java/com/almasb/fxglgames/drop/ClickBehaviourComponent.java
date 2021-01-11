@@ -1,6 +1,8 @@
 package com.almasb.fxglgames.drop;
 
 import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.Spawns;
 
 /**
  * Class governs behavior on click - was handled by TileFactory before. Logic is basically the same
@@ -124,7 +126,7 @@ public class ClickBehaviourComponent extends Component{
         }
 
         //todo find fix for texture loading bug (backlog)
-        //spawn("ship", tile.getX(), tile.getY());
+
 
 
 
