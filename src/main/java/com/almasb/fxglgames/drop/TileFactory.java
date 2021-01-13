@@ -167,7 +167,7 @@ public class TileFactory implements EntityFactory {
             }
 
             //todo complete logic for ship spawning
-           spawn("ship", tile.getX(), tile.getY());
+           //spawn("ship", tile.getX(), tile.getY());
         });
         return tile;
     }
