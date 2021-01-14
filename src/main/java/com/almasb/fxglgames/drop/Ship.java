@@ -22,6 +22,8 @@ public class Ship extends Parent {
 
     }
 
+
+
     public void hit() {
         health--;
     }

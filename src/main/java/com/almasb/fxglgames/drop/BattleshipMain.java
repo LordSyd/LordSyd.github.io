@@ -33,17 +33,7 @@ public class BattleshipMain extends GameApplication {
 
     private int deadPlayer = 0;
 
-    public static boolean isBetweenTurnMenuActive() {
-        return betweenTurnMenuActive;
-    }
 
-    public static void setBetweenTurnMenuActive(boolean betweenTurnMenuActive) {
-        BattleshipMain.betweenTurnMenuActive = betweenTurnMenuActive;
-    }
-
-    public static boolean isPlayer1Turn() {
-        return player1Turn;
-    }
 
     public static void setPlayer1Turn(boolean player1Turn) {
         BattleshipMain.player1Turn = player1Turn;
@@ -115,7 +105,7 @@ public class BattleshipMain extends GameApplication {
         if (deadPlayer != 0){
             showGameOverMenu();
         }
-        TileFactory.updateBoardState();
+
         if (betweenTurnMenuActive){
             showTurnMenu();
         }

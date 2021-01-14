@@ -2,8 +2,6 @@ package com.almasb.fxglgames.drop;
 
 import com.almasb.fxgl.entity.component.Component;
 
-import com.almasb.fxgl.entity.SpawnData;
-import com.almasb.fxgl.entity.Spawns;
 
 
 /**
@@ -25,6 +23,8 @@ public class ClickBehaviourComponent extends Component{
         primary = false;
         onPrimaryClick();
 
+
+
     }
 
     /**
@@ -32,7 +32,11 @@ public class ClickBehaviourComponent extends Component{
      */
 
 
+
+
     public void onPrimaryClick() {
+
+
         System.out.println("clicked:  "+ entity.getProperties().getValue("x") + entity.getProperties().getValue("y"));
 
         int playerId = entity.getProperties().getValue("Player");
@@ -123,31 +127,12 @@ public class ClickBehaviourComponent extends Component{
 
                 }
             }
-
-
         }
 
         //todo find fix for texture loading bug (backlog)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        TileFactory.updateBoardState();
 
     }
-
-
 
 }

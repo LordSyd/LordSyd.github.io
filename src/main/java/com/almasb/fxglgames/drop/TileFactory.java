@@ -35,7 +35,7 @@ public class TileFactory implements EntityFactory {
 
 
     /**
-     * method to streamline update between frames
+     * method to streamline update between frames, could be optimised
      */
     protected static void updateBoardState(){
 
