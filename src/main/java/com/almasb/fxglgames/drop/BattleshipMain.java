@@ -4,7 +4,6 @@ package com.almasb.fxglgames.drop;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
-import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.entity.Entity;
 
@@ -33,7 +32,9 @@ public class BattleshipMain extends GameApplication {
 
     private int deadPlayer = 0;
 
-
+    public static boolean isPlayer1Turn() {
+        return player1Turn;
+    }
 
     public static void setPlayer1Turn(boolean player1Turn) {
         BattleshipMain.player1Turn = player1Turn;
@@ -105,6 +106,14 @@ public class BattleshipMain extends GameApplication {
         if (deadPlayer != 0){
             showGameOverMenu();
         }
+
+        /*if (player1Turn){
+            ShipFactory.updateShipSpawns(player1);
+        }else{
+            ShipFactory.updateShipSpawns(player2);
+        }*/
+
+
 
         if (betweenTurnMenuActive){
             showTurnMenu();

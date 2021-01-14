@@ -10,6 +10,7 @@ import com.almasb.fxgl.physics.HitBox;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import org.jetbrains.annotations.NotNull;
 
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class TileFactory implements EntityFactory {
      * @param boardToCheck board identifier as string
      * @param playerID player ID as int
      */
-    protected static void getBoardStateColors(String boardToCheck, int playerID){
+    protected static void getBoardStateColors(@NotNull String boardToCheck, int playerID){
 
         Entity temp;
 
@@ -171,6 +172,8 @@ public class TileFactory implements EntityFactory {
         });
         return tile;
     }
+
+
 }
 
 

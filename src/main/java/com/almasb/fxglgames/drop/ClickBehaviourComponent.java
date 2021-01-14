@@ -1,6 +1,7 @@
 package com.almasb.fxglgames.drop;
 
 import com.almasb.fxgl.entity.component.Component;
+import static com.almasb.fxgl.dsl.FXGL.*;
 
 
 
@@ -37,6 +38,14 @@ public class ClickBehaviourComponent extends Component{
     public void onPrimaryClick() {
 
 
+
+          if (BattleshipMain.isPlayer1Turn()){
+            ShipFactory.updateShipSpawns(BattleshipMain.player1);
+        }else{
+            ShipFactory.updateShipSpawns(BattleshipMain.player2);
+        }
+
+
         System.out.println("clicked:  "+ entity.getProperties().getValue("x") + entity.getProperties().getValue("y"));
 
         int playerId = entity.getProperties().getValue("Player");
@@ -51,10 +60,13 @@ public class ClickBehaviourComponent extends Component{
                             {
                                 if (BattleshipMain.player1.placeShip(
                                         new Ship(BattleshipMain.player1ShipsToPlace,
-                                                primary),
+                                                primary,
+                                                entity.getX(),
+                                                entity.getY()),
                                         entity.getProperties().getValue("x"), entity.getProperties().getValue("y")))
                                 {
                                     System.out.println("Ship");
+                                    ShipFactory.updateShipSpawns(BattleshipMain.player1);
 
                                     TileFactory.getBoardStateColors(tileType, 1);
 
@@ -72,12 +84,16 @@ public class ClickBehaviourComponent extends Component{
                             if (BattleshipMain.player2.placeShip(
                                     new Ship(
                                             BattleshipMain.player2ShipsToPlace,
-                                            primary
+                                            primary,
+                                            entity.getX(),
+                                            entity.getY()
+
                                     ),
                                     entity.getProperties().getValue("x"), entity.getProperties().getValue("y"))
                                 )
                             {
                                 System.out.println("Ship");
+                                ShipFactory.updateShipSpawns(BattleshipMain.player2);
 
 
 

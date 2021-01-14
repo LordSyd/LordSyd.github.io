@@ -1,5 +1,7 @@
 package com.almasb.fxglgames.drop;
 
+import java.util.ArrayList;
+
 /**
  * This class represents the players. It has two arrays for saving the ship positions and where the player has shot,
  * if it hit anything and so on. It also has health that gets subtracted from on hit() and it checks if ships can be
@@ -13,10 +15,16 @@ public class Player {
     private final BoardState ships = new BoardState();
     private final BoardState shots = new BoardState();
 
+    public ArrayList<Ship> shipInstances = new ArrayList<Ship>();
+
 
     private int health = 5+4+3+2+1; //numbers of tiles per ship type
 
     public Player() {
+    }
+
+    public ArrayList<Ship> getShipInstances() {
+        return shipInstances;
     }
 
     public int getStateOfShipsCell(int x, int y) {
@@ -47,9 +55,10 @@ public class Player {
 
     public boolean placeShip(Ship ship, int x, int y) {
         if (canPlaceShip(ship, x, y)) {
-            int length = ship.type;
+            this.shipInstances.add(ship);
+            int length = ship.getType();
 
-            if (ship.vertical) {
+            if (ship.isVertical()) {
                 for (int i = y; i < y + length; i++) {
                     ships.setStateOfCell(x, i, 1);
 
@@ -76,9 +85,9 @@ public class Player {
     }
 
     private boolean canPlaceShip(Ship ship, int x, int y) {
-        int length = ship.type;
+        int length = ship.getType();
 
-        if (ship.vertical) {
+        if (ship.isVertical()) {
             for (int i = y; i < y + length; i++) {
                 if (!ships.isValidPoint(x, i))
                     return false;

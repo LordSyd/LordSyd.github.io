@@ -67,11 +67,19 @@ public class NewTurnSubScene  extends SubScene implements EventHandler<ActionEve
     @Override
     public void handle(ActionEvent event) {
 
+        Player activePlayer;
+
 
         System.out.println("pressed");
 
         BattleshipMain.closeTurnMenu();
         TileFactory.updateBoardState();
+        if(BattleshipMain.isPlayer1Turn()){
+            activePlayer = BattleshipMain.player1;
+        }else{
+            activePlayer = BattleshipMain.player2;
+        }
+        ShipFactory.updateShipSpawns(activePlayer);
 
     }
 }
