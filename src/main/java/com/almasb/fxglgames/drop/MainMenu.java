@@ -9,14 +9,18 @@ import com.almasb.fxgl.app.scene.FXGLMenu;
 
 import com.almasb.fxgl.app.scene.MenuType;
 import javafx.beans.binding.StringBinding;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 /**
  * Not fully functioning at the moment, game uses default menu as of now. Problem with fireNewGame() method
@@ -24,19 +28,43 @@ import java.awt.event.ActionEvent;
 
 public class MainMenu extends FXGLMenu {
 
-    public MainMenu(MenuType type) {
-        super(type);
-        Button startGame = createActionButton("Start", () -> fireNewGame());
+    public MainMenu() {
+        super(MenuType.MAIN_MENU);
+        var startGame =  createActionButton("Start", this::fireNewGame);
+
+        Runnable testAction = this::fireNewGame;
+
+        EventHandler<ActionEvent> event = event1 -> testAction.run();
+
+        startGame.setOnAction(event);
+
+
+
+
+
+
+
+
+
+
 
         getContentRoot().getChildren().add(startGame);
 
 
-    }
+    };
+
+
+
+
+
+
+
 
     
 
     @Override
     protected Button createActionButton(String name, Runnable action) {
+
         return new Button(name);
     }
 

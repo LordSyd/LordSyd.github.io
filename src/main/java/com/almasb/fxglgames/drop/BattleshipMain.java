@@ -3,6 +3,9 @@ package com.almasb.fxglgames.drop;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.FXGLMenu;
+import com.almasb.fxgl.app.scene.MenuType;
+import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.entity.Entity;
 
 
@@ -20,16 +23,35 @@ public class BattleshipMain extends GameApplication {
      * Also for testing purposes the boards of player one and player two are spawned on different sides of the screen
      */
 
-    static Player player1 = new Player();
-    static Player player2 = new Player();
-    static int player1ShipsToPlace = 5;
-    static int player2ShipsToPlace = 5;
-    static boolean gameRunning = false;
-    static boolean player1Turn = true;
-    static boolean betweenTurnMenuActive = false;
+    static protected Player player1 = new Player();
+    static protected Player player2 = new Player();
+    static protected int player1ShipsToPlace = 5;
+    static protected int player2ShipsToPlace = 5;
+    static private boolean gameRunning = false;
+    static private boolean player1Turn = true;
+    static protected boolean betweenTurnMenuActive = false;
 
     private int deadPlayer = 0;
 
+    public static boolean isBetweenTurnMenuActive() {
+        return betweenTurnMenuActive;
+    }
+
+    public static void setBetweenTurnMenuActive(boolean betweenTurnMenuActive) {
+        BattleshipMain.betweenTurnMenuActive = betweenTurnMenuActive;
+    }
+
+    public static boolean isPlayer1Turn() {
+        return player1Turn;
+    }
+
+    public static void setPlayer1Turn(boolean player1Turn) {
+        BattleshipMain.player1Turn = player1Turn;
+    }
+
+    public static boolean isGameRunning() {
+        return gameRunning;
+    }
 
 
     @Override
@@ -39,14 +61,14 @@ public class BattleshipMain extends GameApplication {
 
         //todo implement main menu spawning
 
-        /*settings.setSceneFactory(new SceneFactory()
+        settings.setSceneFactory(new SceneFactory()
 
         {
             @Override
             public FXGLMenu newMainMenu() {
-                return new MainMenu(MenuType.MAIN_MENU);
+                return new MainMenu();
             }
-        });*/
+        });
 
 
         settings.setTitle("Battleship");
@@ -59,11 +81,15 @@ public class BattleshipMain extends GameApplication {
 
 
 
+
+
     /**
      * adds Entity Factories and calls spawn method for boards
      */
     @Override
     protected void initGame() {
+
+
 
 
         getGameWorld().addEntityFactory(new TileFactory());
