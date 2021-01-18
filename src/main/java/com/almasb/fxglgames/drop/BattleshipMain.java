@@ -83,6 +83,8 @@ public class BattleshipMain extends GameApplication {
     @Override
     protected void initGame() {
 
+        loopBGM("Plasma_Connection.wav");
+
 
         getGameWorld().addEntityFactory(new TileFactory());
 
