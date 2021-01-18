@@ -147,7 +147,10 @@ public class BattleshipMain extends GameApplication {
      */
     static protected void showTurnMenu(){
 
+        if (player1ShipsToPlace == 0 && player2ShipsToPlace ==0){
 
+            gameRunning = true;
+        }
 
         getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
         if (player1Turn){
@@ -155,6 +158,7 @@ public class BattleshipMain extends GameApplication {
         }else{
             getSceneService().pushSubScene(new NewTurnSubScene(2, gameRunning));
         }
+
     }
 
     protected void showGameOverMenu(){
@@ -196,10 +200,7 @@ public class BattleshipMain extends GameApplication {
             spawnHitBoard(2);
             spawnShipBoard(2);
         }
-        if (player1ShipsToPlace == 0 && player2ShipsToPlace ==0){
 
-            gameRunning = true;
-        }
     }
 
 
