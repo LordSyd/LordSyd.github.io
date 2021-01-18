@@ -24,17 +24,36 @@ public class NewTurnSubScene  extends SubScene implements EventHandler<ActionEve
 
 
         String nextPlayerText = "I should not appear";
-        var text = getUIFactoryService().newText(nextPlayerText , Color.GOLD, 32);
+        var text = getUIFactoryService().newText(nextPlayerText, Color.GOLD, 32);
 
-        if (!gameRunning){
-            switch (nextPlayerID){
-                case 1 -> nextPlayerText = "Player One - Place your ships";
-                case 2 -> nextPlayerText = "Player Two - Place your ships ";
+        if (!gameRunning) {
+
+            switch (nextPlayerID) {
+                case 1 -> {
+                    nextPlayerText = "Player One - Place your ships";
+                }
+                case 2 -> {
+                    nextPlayerText = "Player Two - Place your ships ";
+                }
             }
-        }else{
+        }else if(gameRunning){
+                switch (nextPlayerID){
+                    case 1 -> nextPlayerText = "Player One - it´s your turn";
+
+                    case 2 -> nextPlayerText = "Player Two - it´s your turn";
+                }
+            }
+
+
+
+
+
+
+
+
             //Todo implement correct text
 
-        }
+
 
         text = getUIFactoryService().newText(nextPlayerText , Color.GOLD, 30);
 
