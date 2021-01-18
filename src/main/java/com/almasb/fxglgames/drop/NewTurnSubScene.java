@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 
-import javax.swing.*;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 /**

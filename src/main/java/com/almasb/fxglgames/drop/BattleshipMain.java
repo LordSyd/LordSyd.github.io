@@ -6,15 +6,9 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.entity.Entity;
-import javafx.scene.image.Image;
 import org.jetbrains.annotations.NotNull;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 //todo fix placement of boards
@@ -88,20 +82,16 @@ public class BattleshipMain extends GameApplication {
     @Override
     protected void initGame() {
 
+        loopBGM("Plasma_Connection.wav");
 
         getGameWorld().addEntityFactory(new TileFactory());
-
-
         getGameWorld().addEntityFactory(new ShipFactory());
 
         //Spawn  hitBoard player 1
         spawnHitBoard(1);
 
-
         //Spawn shipBoard player1
-
         spawnShipBoard(1);
-
 
     }
 
@@ -112,9 +102,6 @@ public class BattleshipMain extends GameApplication {
         if (deadPlayer != 0){
             showGameOverMenu();
         }
-
-
-
         if (betweenTurnMenuActive){
             showTurnMenu();
         }
@@ -134,70 +121,8 @@ public class BattleshipMain extends GameApplication {
         }
     }
 
-    /**
-     * not used at the moment, test code remains inside for the time being
-     */
     @Override
-    protected void initUI(){
-        /*BorderPane root = new BorderPane();
-        root.setPrefSize(600, 800);
-        root.setRight(new Text("RIGHT SIDEBAR - CONTROLS"));
-        //FXGL.getGameScene().addUINode(root);
-
-        enemyBoard = new Board(true, event -> {
-            if (!running)
-                return;
-
-            Cell cell = (Cell) event.getSource();
-            if (cell.wasShot){
-                System.out.println("already shot");
-                return;}
-
-
-
-
-
-            enemyTurn = !cell.shoot();
-
-
-
-            if (enemyBoard.ships == 0) {
-                System.out.println("YOU WIN");
-                System.exit(0);
-            }
-
-            if (enemyTurn)
-                enemyMove();
-        });
-
-        playerBoard = new Board(false, event -> {
-            if (running)
-                return;
-
-            Cell cell = (Cell) event.getSource();
-            if (playerBoard.placeShip(new Ship(shipsToPlace, event.getButton() == MouseButton.PRIMARY), cell.x, cell.y)) {
-                if (--shipsToPlace == 0) {
-                    startGame();
-                }
-            }
-
-
-            System.out.println(playerBoard.getBoundsInParent());
-
-            spawnDroplet(68, 20);
-
-
-        });
-
-        VBox vbox = new VBox(50, enemyBoard, playerBoard);
-        vbox.setAlignment(Pos.CENTER);
-
-        root.setCenter(vbox);*/
-
-
-
-
-    }
+    protected void initUI(){}
 
 
     /**

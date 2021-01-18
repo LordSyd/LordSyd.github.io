@@ -9,15 +9,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 
-import javax.swing.*;
-
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 /**
  * Simple layout class controlling the game over screen
  */
 
-public class GameOverScreen  extends SubScene {
+public class GameOverScreen  extends SubScene implements EventHandler<ActionEvent> {
 
 
     public GameOverScreen(int deadPlayer) {
@@ -41,10 +39,23 @@ public class GameOverScreen  extends SubScene {
         bg.setStroke(Color.WHITE);
         bg.setStrokeWidth(10);
 
+        var button = new FXGLButton("Restart");
+        button.setOnAction(this);
+        button.setTranslateX(100);
+        button.setTranslateY(400);
+
 
         var stackPane = new StackPane(bg, text);
         getContentRoot().getChildren().add(stackPane);
 
+
+
+    }
+
+    @Override
+    public void handle(ActionEvent event) {
+
+        BattleshipMain.closeTurnMenu();
 
 
     }
