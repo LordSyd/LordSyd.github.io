@@ -56,7 +56,6 @@ public class ShipFactory implements EntityFactory {
         Ship ship;
         ArrayList<Ship> shipsList = player.getShipInstances();
 
-
         if (shipsList.size() != 0) {
             Iterator<Ship> iterator = shipsList.iterator();
 
@@ -69,57 +68,21 @@ public class ShipFactory implements EntityFactory {
         }
     }
 
-
-
-    //todo implement logic to check which ship should be spawned in what orientation when
-
-
-
-
-
-
     @Spawns("ship")
     public Entity newShip(SpawnData data) throws FileNotFoundException {
         File test = new File(nextShipSpriteLocation);
 
-
         FileInputStream input = new FileInputStream(test.getAbsolutePath());
-
 
         Image img = new Image(input);
 
         ImageView view = new ImageView(img);
 
-
         var ship = FXGL.entityBuilder(data)
-
 
                 .viewWithBBox(view)
                 .build();
 
-
-
-
-
-
-
         return ship;
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
 }

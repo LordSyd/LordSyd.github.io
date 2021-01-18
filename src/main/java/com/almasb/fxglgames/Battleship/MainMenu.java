@@ -26,31 +26,11 @@ public class MainMenu extends FXGLMenu {
         var startGame =  createActionButton("Start", this::fireNewGame);
 
         Runnable testAction = this::fireNewGame;
-
         EventHandler<ActionEvent> event = event1 -> testAction.run();
 
         startGame.setOnAction(event);
-
-
-
-
-
-
-
-
-
-
-
         getContentRoot().getChildren().add(startGame);
-
-
-    };
-
-
-
-
-
-
+    }
 
 
     

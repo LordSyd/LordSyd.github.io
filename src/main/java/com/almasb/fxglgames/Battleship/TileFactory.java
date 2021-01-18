@@ -29,10 +29,10 @@ public class TileFactory implements EntityFactory {
      * these arrays get filed with tiles on spawn, used to iterate over them on click to show change of state on screen
      * by changing the tile's color. Uses 4 array lists to make check logic inside getBoardState() less complicated
      */
-    static ArrayList<Entity> player1shipTiles = new ArrayList<Entity>();
-    static ArrayList<Entity> player1hitTiles = new ArrayList<Entity>();
-    static ArrayList<Entity> player2shipTiles = new ArrayList<Entity>();
-    static ArrayList<Entity> player2hitTiles = new ArrayList<Entity>();
+    static ArrayList<Entity> player1shipTiles = new ArrayList<>();
+    static ArrayList<Entity> player1hitTiles = new ArrayList<>();
+    static ArrayList<Entity> player2shipTiles = new ArrayList<>();
+    static ArrayList<Entity> player2hitTiles = new ArrayList<>();
 
 
     /**
@@ -145,9 +145,6 @@ public class TileFactory implements EntityFactory {
     @Spawns("tile")
     public Entity newTile(SpawnData data) {
 
-
-
-
         TileViewComponent original = new TileViewComponent(Color.GRAY);
 
         var tile = entityBuilder(data)
@@ -157,8 +154,6 @@ public class TileFactory implements EntityFactory {
                 .with(new ClickBehaviourComponent())
                 .build();
 
-
-
         tile.getViewComponent().addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 
             if (e.getButton() == MouseButton.SECONDARY){
@@ -166,7 +161,6 @@ public class TileFactory implements EntityFactory {
             }else if (e.getButton() == MouseButton.PRIMARY) {
                 tile.getComponent(ClickBehaviourComponent.class).onPrimaryClick();
             }
-
         });
         return tile;
     }
