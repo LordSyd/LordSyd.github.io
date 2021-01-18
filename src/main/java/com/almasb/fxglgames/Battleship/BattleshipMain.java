@@ -33,6 +33,8 @@ public class BattleshipMain extends GameApplication {
     static private boolean gameRunning = false;
     static private boolean player1Turn = true;
     static protected boolean betweenTurnMenuActive = false;
+    static protected boolean GameOverMenuActive = false;
+
 
     private int deadPlayer = 0;
 
@@ -93,7 +95,7 @@ public class BattleshipMain extends GameApplication {
     }
 
     /**
-     * Called on update of frame. che
+     * Called on update of frame. checks if player is dead
      *
      * @param tpf double
      */
@@ -102,12 +104,9 @@ public class BattleshipMain extends GameApplication {
     protected void onUpdate(double tpf) {
         deadPlayer = checkPlayerDead();
 
-        if (deadPlayer != 0){
+        if (!GameOverMenuActive && deadPlayer != 0){
+            GameOverMenuActive = true;
             showGameOverMenu();
-        }
-
-        if (betweenTurnMenuActive){
-            showTurnMenu();
         }
     }
 
@@ -158,6 +157,7 @@ public class BattleshipMain extends GameApplication {
     }
 
     protected void showGameOverMenu(){
+
         getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
 
         Music gameOver = FXGL.getAssetLoader().loadMusic("20. Rush.wav");

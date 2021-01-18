@@ -35,16 +35,12 @@ public class ClickBehaviourComponent extends Component{
 
     public void onPrimaryClick() {
 
-
-
           if (BattleshipMain.isPlayer1Turn()){
             ShipFactory.updateShipSpawns(BattleshipMain.player1);
         }else{
             ShipFactory.updateShipSpawns(BattleshipMain.player2);
         }
 
-
-        System.out.println("clicked:  "+ entity.getProperties().getValue("x") + entity.getProperties().getValue("y"));
 
         int playerId = entity.getProperties().getValue("Player");
         String tileType = entity.getProperties().getValue("boardType");
@@ -92,17 +88,11 @@ public class ClickBehaviourComponent extends Component{
                                 System.out.println("Ship");
                                 ShipFactory.updateShipSpawns(BattleshipMain.player2);
 
-
-
                                 TileFactory.getBoardStateColors(tileType,2);
-
-
-
 
                                 if (--BattleshipMain.player2ShipsToPlace == 0) {
 
                                     BattleshipMain.setPlayer1Turn(true);
-
 
                                     BattleshipMain.showTurnMenu();
                                 }
@@ -120,8 +110,11 @@ public class ClickBehaviourComponent extends Component{
                         case 1 -> {
                             TileFactory.updateBoardState();
                             if (BattleshipMain.betweenTurnMenuActive =
-                                    BattleshipMain.player2.shoot(entity.getProperties().getValue("x"), entity.getProperties().getValue("y"))) {
+                                    BattleshipMain.player2.shoot(
+                                            entity.getProperties().getValue("x"),
+                                            entity.getProperties().getValue("y"))) {
                                 BattleshipMain.setPlayer1Turn(false);
+                                BattleshipMain.showTurnMenu();
                             }
 
                         }
@@ -131,8 +124,11 @@ public class ClickBehaviourComponent extends Component{
                             TileFactory.getBoardStateColors(tileType, 2);
 
                             if (BattleshipMain.betweenTurnMenuActive =
-                                    BattleshipMain.player1.shoot(entity.getProperties().getValue("x"), entity.getProperties().getValue("y"))) {
+                                    BattleshipMain.player1.shoot(
+                                            entity.getProperties().getValue("x"),
+                                            entity.getProperties().getValue("y"))) {
                                 BattleshipMain.setPlayer1Turn(true);
+                                BattleshipMain.showTurnMenu();
                             }
                         }
                     }
@@ -140,7 +136,6 @@ public class ClickBehaviourComponent extends Component{
                 }
             }
         }
-
         TileFactory.updateBoardState();
     }
 
