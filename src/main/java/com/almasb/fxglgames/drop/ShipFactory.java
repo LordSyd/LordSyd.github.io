@@ -12,6 +12,11 @@ import javafx.scene.image.ImageView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import static com.almasb.fxgl.dsl.FXGL.*;
+
 
 
 /**
@@ -20,24 +25,62 @@ import java.io.FileNotFoundException;
 
 public class ShipFactory implements EntityFactory {
 
+    private static String nextShipSpriteLocation;
+
+
+    private static String locationResolver(int type, boolean vertical){
+        StringBuilder location = new StringBuilder();
+        location.append("src/main/resources/assets/textures/");
+
+        if (!vertical){
+            switch (type){
+                case 1 -> location.append("ship_1x1_vertical.png");
+                case 2 -> location.append("ship_1x2_vertical.png");
+                case 3 -> location.append("ship_1x3_vertical.png");
+                case 4 -> location.append("ship_1x4_vertical.png");
+                case 5 -> location.append("ship_1x5_vertical.png");
+            }
+        }else{
+            switch (type){
+                case 1 -> location.append("ship_1x1.png");
+                case 2 -> location.append("ship_1x2.png");
+                case 3 -> location.append("ship_1x3.png");
+                case 4 -> location.append("ship_1x4.png");
+                case 5 -> location.append("ship_1x5.png");
+            }
+        }
+        return location.toString();
+    }
+
+    public static void updateShipSpawns(Player player) {
+        Ship ship;
+        ArrayList<Ship> shipsList = player.getShipInstances();
+
+
+        if (shipsList.size() != 0) {
+            Iterator<Ship> iterator = shipsList.iterator();
+
+            for (int i = 0; i < shipsList.size(); i++) {
+                ship = iterator.next();
+                nextShipSpriteLocation = locationResolver(ship.getType(), ship.isVertical());
+                spawn("ship", ship.getX(), ship.getY());
+
+            }
+        }
+    }
+
 
 
     //todo implement logic to check which ship should be spawned in what orientation when
 
-    //todo fix entity despawning and respawning behaviour
+
+
+
 
 
     @Spawns("ship")
     public Entity newShip(SpawnData data) throws FileNotFoundException {
-        File test = new File("src/main/assets/textures/ship_1x1.png");
-
-        switch ( BattleshipMain.player1ShipsToPlace ) {
-            case 4 ->  test = new File("src/main/assets/textures/ship5.png");
-            case 3 ->  test = new File("src/main/assets/textures/ship_1x4.png");
-            case 2 ->  test = new File("src/main/assets/textures/ship_1x3.png");
-            case 1 ->  test = new File("src/main/assets/textures/ship_1x2.png");
-            case 0 ->  test = new File("src/main/assets/textures/ship_1x1.png");
-        }
+        File test = new File(nextShipSpriteLocation);
 
 
         FileInputStream input = new FileInputStream(test.getAbsolutePath());
@@ -71,4 +114,12 @@ public class ShipFactory implements EntityFactory {
 
 
     }
+
+
+
+
+
+
+
+
 }
