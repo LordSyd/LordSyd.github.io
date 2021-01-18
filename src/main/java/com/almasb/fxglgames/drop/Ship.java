@@ -3,9 +3,8 @@ package com.almasb.fxglgames.drop;
 import javafx.scene.Parent;
 
 /**
- * This class instantiates ships that has been placed as well saving their orientation. Somewhat redundant at the moment,
- * a remnant from the example project that was used to plan the logic. But it is hooked into the main logic, so I
- * could not be bothered to integrate it's logic elsewhere - plus it maybe is useful for future-proofing.
+ * This class instantiates ships that has been placed as well saving their orientation. Used to save ship coordinates
+ * and orientation for ship spawning
  */
 
 public class Ship extends Parent {

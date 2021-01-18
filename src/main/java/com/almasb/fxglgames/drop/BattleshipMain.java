@@ -6,7 +6,15 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.entity.Entity;
+import javafx.scene.image.Image;
+import org.jetbrains.annotations.NotNull;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 //todo fix placement of boards
@@ -50,11 +58,11 @@ public class BattleshipMain extends GameApplication {
 
         settings.setMainMenuEnabled(true);
 
-        //todo implement main menu spawning
 
         settings.setSceneFactory(new SceneFactory()
 
         {
+            @NotNull
             @Override
             public FXGLMenu newMainMenu() {
                 return new MainMenu();
@@ -81,11 +89,9 @@ public class BattleshipMain extends GameApplication {
     protected void initGame() {
 
 
-
-
         getGameWorld().addEntityFactory(new TileFactory());
 
-        //todo find workaround for engine bug with texture assignment
+
         getGameWorld().addEntityFactory(new ShipFactory());
 
         //Spawn  hitBoard player 1
@@ -106,12 +112,6 @@ public class BattleshipMain extends GameApplication {
         if (deadPlayer != 0){
             showGameOverMenu();
         }
-
-        /*if (player1Turn){
-            ShipFactory.updateShipSpawns(player1);
-        }else{
-            ShipFactory.updateShipSpawns(player2);
-        }*/
 
 
 
@@ -135,7 +135,7 @@ public class BattleshipMain extends GameApplication {
     }
 
     /**
-     * not used at the moment, test code remains inside for the time beeing
+     * not used at the moment, test code remains inside for the time being
      */
     @Override
     protected void initUI(){
@@ -205,7 +205,7 @@ public class BattleshipMain extends GameApplication {
      */
 
     static protected void showStartMenu(){
-        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+        getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
         getSceneService().pushSubScene(new StartMenuSubScene());
     }
 
@@ -214,7 +214,7 @@ public class BattleshipMain extends GameApplication {
      */
     static protected void showTurnMenu(){
 
-        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+        getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
         if (player1Turn){
             getSceneService().pushSubScene(new NewTurnSubScene(1, gameRunning));
         }else{
@@ -223,7 +223,7 @@ public class BattleshipMain extends GameApplication {
     }
 
     protected void showGameOverMenu(){
-        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+        getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
 
             getSceneService().pushSubScene(new GameOverScreen(deadPlayer));
     }
@@ -243,7 +243,7 @@ public class BattleshipMain extends GameApplication {
         betweenTurnMenuActive = false;
         clearTileArrays();
 
-        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+        getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
         getSceneService().popSubScene();
 
         if (player1Turn){
@@ -261,7 +261,7 @@ public class BattleshipMain extends GameApplication {
 
 
     static protected void closeStartMenu(){
-        getGameWorld().getEntitiesCopy().forEach(e -> e.removeFromWorld());
+        getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
         getSceneService().popSubScene();
 
         spawnHitBoard(1);

@@ -74,7 +74,6 @@ public class ClickBehaviourComponent extends Component{
 
                                         BattleshipMain.setPlayer1Turn(false);
 
-                                        //todo exchange test for menu with real player change submenu
                                         BattleshipMain.showTurnMenu();
                                     }
                                 }
@@ -107,7 +106,6 @@ public class ClickBehaviourComponent extends Component{
                                     BattleshipMain.setPlayer1Turn(true);
 
 
-                                    //todo exchange test for menu with real player change submenu
                                     BattleshipMain.showTurnMenu();
                                 }
 
@@ -145,10 +143,7 @@ public class ClickBehaviourComponent extends Component{
             }
         }
 
-        //todo find fix for texture loading bug (backlog)
-
         TileFactory.updateBoardState();
-
     }
 
 }

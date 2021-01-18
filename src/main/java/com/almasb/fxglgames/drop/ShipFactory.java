@@ -28,12 +28,9 @@ public class ShipFactory implements EntityFactory {
     private static String nextShipSpriteLocation;
 
 
-
-
-
     private static String locationResolver(int type, boolean vertical){
         StringBuilder location = new StringBuilder();
-        location.append("src/main/assets/textures/");
+        location.append("src/main/resources/assets/textures/");
 
         if (!vertical){
             switch (type){
@@ -41,7 +38,7 @@ public class ShipFactory implements EntityFactory {
                 case 2 -> location.append("ship_1x2_vertical.png");
                 case 3 -> location.append("ship_1x3_vertical.png");
                 case 4 -> location.append("ship_1x4_vertical.png");
-                case 5 -> location.append("ship_5_vertical.png");
+                case 5 -> location.append("ship_1x5_vertical.png");
             }
         }else{
             switch (type){
@@ -49,7 +46,7 @@ public class ShipFactory implements EntityFactory {
                 case 2 -> location.append("ship_1x2.png");
                 case 3 -> location.append("ship_1x3.png");
                 case 4 -> location.append("ship_1x4.png");
-                case 5 -> location.append("ship5.png");
+                case 5 -> location.append("ship_1x5.png");
             }
         }
         return location.toString();
@@ -59,27 +56,24 @@ public class ShipFactory implements EntityFactory {
         Ship ship;
         ArrayList<Ship> shipsList = player.getShipInstances();
 
-        if (shipsList != null){
-            if (shipsList.size() != 0) {
-                Iterator<Ship> iterator = shipsList.iterator();
 
-                for (int i = 0; i < shipsList.size(); i++) {
-                    ship = iterator.next();
-                    nextShipSpriteLocation = locationResolver(ship.getType(), ship.isVertical());
-                    spawn("ship", ship.getX(), ship.getY());
+        if (shipsList.size() != 0) {
+            Iterator<Ship> iterator = shipsList.iterator();
 
-                }
+            for (int i = 0; i < shipsList.size(); i++) {
+                ship = iterator.next();
+                nextShipSpriteLocation = locationResolver(ship.getType(), ship.isVertical());
+                spawn("ship", ship.getX(), ship.getY());
+
             }
         }
-
-
     }
 
 
 
     //todo implement logic to check which ship should be spawned in what orientation when
 
-    //todo fix entity despawning and respawning behaviour
+
 
 
 
@@ -87,9 +81,6 @@ public class ShipFactory implements EntityFactory {
     @Spawns("ship")
     public Entity newShip(SpawnData data) throws FileNotFoundException {
         File test = new File(nextShipSpriteLocation);
-
-
-
 
 
         FileInputStream input = new FileInputStream(test.getAbsolutePath());
