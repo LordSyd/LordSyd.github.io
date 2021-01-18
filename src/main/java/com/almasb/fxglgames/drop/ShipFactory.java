@@ -34,7 +34,7 @@ public class ShipFactory implements EntityFactory {
 
         if (!vertical){
             switch (type){
-                case 1 -> location.append("ship_1x1_vertical.png");
+                case 1 -> location.append("ship_1x1.png");
                 case 2 -> location.append("ship_1x2_vertical.png");
                 case 3 -> location.append("ship_1x3_vertical.png");
                 case 4 -> location.append("ship_1x4_vertical.png");
