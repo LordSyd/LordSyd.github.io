@@ -1,4 +1,4 @@
-package com.almasb.fxglgames.drop;
+package com.almasb.fxglgames.Battleship;
 
 import com.almasb.fxgl.scene.SubScene;
 import com.almasb.fxgl.ui.FXGLButton;

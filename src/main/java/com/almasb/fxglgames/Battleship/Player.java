@@ -1,4 +1,4 @@
-package com.almasb.fxglgames.drop;
+package com.almasb.fxglgames.Battleship;
 
 import java.util.ArrayList;
 

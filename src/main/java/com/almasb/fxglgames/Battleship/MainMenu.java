@@ -1,9 +1,6 @@
-package com.almasb.fxglgames.drop;
+package com.almasb.fxglgames.Battleship;
 
 
-
-import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.app.GameSettings;
 
 import com.almasb.fxgl.app.scene.FXGLMenu;
 
@@ -14,13 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-
-import java.awt.*;
 
 /**
  * Not fully functioning at the moment, game uses default menu as of now. Problem with fireNewGame() method

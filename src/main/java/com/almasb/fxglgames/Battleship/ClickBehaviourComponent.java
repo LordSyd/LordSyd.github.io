@@ -1,8 +1,6 @@
-package com.almasb.fxglgames.drop;
+package com.almasb.fxglgames.Battleship;
 
 import com.almasb.fxgl.entity.component.Component;
-import static com.almasb.fxgl.dsl.FXGL.*;
-
 
 
 /**

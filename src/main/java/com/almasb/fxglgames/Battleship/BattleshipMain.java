@@ -1,5 +1,4 @@
-package com.almasb.fxglgames.drop;
-
+package com.almasb.fxglgames.Battleship;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
@@ -35,8 +34,6 @@ public class BattleshipMain extends GameApplication {
     static private boolean player1Turn = true;
     static protected boolean betweenTurnMenuActive = false;
 
-
-
     private int deadPlayer = 0;
 
     public static boolean isPlayer1Turn() {
@@ -51,14 +48,13 @@ public class BattleshipMain extends GameApplication {
         return gameRunning;
     }
 
-
     @Override
     protected void initSettings(GameSettings settings) {
 
         settings.setMainMenuEnabled(true);
 
 
-        settings.setSceneFactory(new SceneFactory()
+        /*settings.setSceneFactory(new SceneFactory()
 
         {
             @NotNull
@@ -66,7 +62,7 @@ public class BattleshipMain extends GameApplication {
             public FXGLMenu newMainMenu() {
                 return new MainMenu();
             }
-        });
+        });*/
 
 
         settings.setTitle("Battleship");
@@ -77,35 +73,30 @@ public class BattleshipMain extends GameApplication {
 
     }
 
-
-
-
-
     /**
-     * adds Entity Factories and calls spawn method for boards
+     * adds Entity Factories and calls spawn method for boards, also starts main music loop
      */
     @Override
     protected void initGame() {
         Music mainSong = FXGL.getAssetLoader().loadMusic("Plasma_Connection.wav");
-
         FXGL.getAudioPlayer().loopMusic(mainSong);
 
-
         getGameWorld().addEntityFactory(new TileFactory());
-
-
         getGameWorld().addEntityFactory(new ShipFactory());
 
         //Spawn  hitBoard player 1
         spawnHitBoard(1);
-
-
         //Spawn shipBoard player1
-
         spawnShipBoard(1);
 
 
     }
+
+    /**
+     * Called on update of frame. che
+     *
+     * @param tpf double
+     */
 
     @Override
     protected void onUpdate(double tpf) {
@@ -114,8 +105,6 @@ public class BattleshipMain extends GameApplication {
         if (deadPlayer != 0){
             showGameOverMenu();
         }
-
-
 
         if (betweenTurnMenuActive){
             showTurnMenu();
@@ -158,6 +147,8 @@ public class BattleshipMain extends GameApplication {
      */
     static protected void showTurnMenu(){
 
+
+
         getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
         if (player1Turn){
             getSceneService().pushSubScene(new NewTurnSubScene(1, gameRunning));
@@ -169,10 +160,9 @@ public class BattleshipMain extends GameApplication {
     protected void showGameOverMenu(){
         getGameWorld().getEntitiesCopy().forEach(Entity::removeFromWorld);
 
-        Music mainSong = FXGL.getAssetLoader().loadMusic("Plasma_Connection.wav");
         Music gameOver = FXGL.getAssetLoader().loadMusic("20. Rush.wav");
 
-        FXGL.getAudioPlayer().stopMusic(mainSong);
+        FXGL.getAudioPlayer().stopAllMusic();
         FXGL.getAudioPlayer().playMusic(gameOver);
 
 

@@ -1,5 +1,5 @@
 
-package com.almasb.fxglgames.drop;
+package com.almasb.fxglgames.Battleship;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
